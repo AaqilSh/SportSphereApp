@@ -45,8 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // Logo
-            Image.asset('assets/logo.png',
-                height: 80), // Replace with your logo
+            Image.asset('logo.png', height: 80),
             const SizedBox(height: 20),
 
             // Welcome Text
@@ -114,7 +113,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 onPressed: _login,
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 12),
-                  backgroundColor: Colors.blue,
+                  minimumSize: Size(0, 10),
+                  maximumSize: Size(5, 30),
+                  backgroundColor: const Color.fromARGB(255, 6, 80, 141),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
@@ -129,7 +130,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
 
             // Sign Up Link
-            const SizedBox(height: 20),
+            const SizedBox(height: 40),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

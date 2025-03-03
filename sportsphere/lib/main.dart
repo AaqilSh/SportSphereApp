@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
                 fontSize: 24.sp,
                 height: 29.sp / 24.sp,
                 fontFamily: 'Poppins',
-                fontWeight: FontWeight.w500,
+                fontWeight: FontWeight.w800,
                 color: Colors.black,
               ),
             ),

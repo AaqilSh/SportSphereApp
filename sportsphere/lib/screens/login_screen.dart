@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sportsphere/screens/sign_up_screen.dart';
 import '../providers/auth_provider.dart';
 import 'home_screen.dart';
 
@@ -49,14 +50,14 @@ class _LoginScreenState extends State<LoginScreen> {
             const SizedBox(height: 20),
 
             // Welcome Text
-            const Text(
+            Text(
               'Welcome!',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: Theme.of(context).textTheme.titleLarge,
             ),
-            const SizedBox(height: 5),
-            const Text(
+            const SizedBox(height: 10),
+            Text(
               'Please login to continue using our app',
-              style: TextStyle(fontSize: 14, color: Colors.grey),
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
             const SizedBox(height: 20),
 
@@ -70,8 +71,6 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             const SizedBox(height: 15),
-
-            // Password Input
             TextField(
               controller: _passwordController,
               obscureText: !_isPasswordVisible,
@@ -137,7 +136,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 const Text("Don't have an account? "),
                 GestureDetector(
                   onTap: () {
-                    // TODO: Navigate to Sign Up screen
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SignUpScreen()),
+                    );
                   },
                   child: const Text(
                     'Sign up',

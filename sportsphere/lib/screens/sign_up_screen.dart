@@ -27,7 +27,7 @@ class SignUpScreen extends StatelessWidget {
             // Subtitle
             Text(
               "Please fill the details and create account",
-              style: Theme.of(context).textTheme.titleLarge,
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
 
             const SizedBox(height: 20),
@@ -64,7 +64,7 @@ class SignUpScreen extends StatelessWidget {
                 },
                 child: Text(
                   "Sign up",
-                  style: Theme.of(context).textTheme.titleLarge,
+                  style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ),
             ),
@@ -77,7 +77,7 @@ class SignUpScreen extends StatelessWidget {
               children: [
                 Text(
                   "Have an account? ",
-                  style: Theme.of(context).textTheme.titleLarge,
+                  style: Theme.of(context).textTheme.bodyMedium,
                 ),
                 GestureDetector(
                   onTap: () {
@@ -85,7 +85,7 @@ class SignUpScreen extends StatelessWidget {
                   },
                   child: Text(
                     "Login",
-                    style: Theme.of(context).textTheme.titleLarge,
+                    style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ),
               ],

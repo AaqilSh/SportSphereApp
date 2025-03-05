@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sportsphere/screens/favorite_players.screen.dart';
 import 'package:sportsphere/screens/favorite_teams_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -29,7 +30,7 @@ class ProfileScreen extends StatelessWidget {
               () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => FavoriteTeamsScreen())),
+                      builder: (context) => FavoritePlayersScreen())),
             ),
             SizedBox(height: 16),
             Text("Others Options",

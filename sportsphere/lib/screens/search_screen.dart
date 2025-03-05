@@ -41,7 +41,7 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: _buildBottomNavBar(),
+      // bottomNavigationBar: _buildBottomNavBar(),
       backgroundColor: Color(0xFFF8F9FC),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -106,27 +106,6 @@ class _SearchScreenState extends State<SearchScreen> {
             style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16)),
         subtitle: Text(team["country"]!, style: TextStyle(color: Colors.grey)),
       ),
-    );
-  }
-
-  Widget _buildBottomNavBar() {
-    return BottomNavigationBar(
-      currentIndex: 0,
-      selectedItemColor: Colors.blue,
-      unselectedItemColor: Colors.grey,
-      iconSize: 25.0,
-      items: [
-        BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.magnifyingGlass), label: "Search"),
-        BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.house), label: "Leagues"),
-        BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.calendarDays), label: "Schedule"),
-        BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.peopleGroup), label: "Teams"),
-        BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.user), label: "Profile"),
-      ],
     );
   }
 }

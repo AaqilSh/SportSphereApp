@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sportsphere/screens/prodile_screen.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:sportsphere/screens/profile_screen.dart';
 import 'search_screen.dart';
 import 'leagues_screen.dart';
 import 'schedule_screen.dart';
@@ -35,16 +36,20 @@ class _MainScreenState extends State<MainScreen> {
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
         type: BottomNavigationBarType.fixed, // Ensures labels always show
-        selectedItemColor: Colors.black, // Highlighted icon color
+        selectedItemColor: Colors.blue,
         unselectedItemColor: Colors.grey, // Default icon color
+        iconSize: 25.0,
         items: [
-          BottomNavigationBarItem(icon: Icon(Icons.search), label: "Search"),
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Leagues"),
           BottomNavigationBarItem(
-              icon: Icon(Icons.calendar_today), label: "Schedule"),
+              icon: FaIcon(FontAwesomeIcons.magnifyingGlass), label: "Search"),
           BottomNavigationBarItem(
-              icon: Icon(Icons.sports_soccer), label: "Teams"),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
+              icon: FaIcon(FontAwesomeIcons.house), label: "Leagues"),
+          BottomNavigationBarItem(
+              icon: FaIcon(FontAwesomeIcons.calendarDays), label: "Schedule"),
+          BottomNavigationBarItem(
+              icon: FaIcon(FontAwesomeIcons.peopleGroup), label: "Teams"),
+          BottomNavigationBarItem(
+              icon: FaIcon(FontAwesomeIcons.user), label: "Profile"),
         ],
       ),
     );

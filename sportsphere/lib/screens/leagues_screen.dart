@@ -65,7 +65,6 @@ class LeaguesScreen extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: _buildBottomNavBar(),
     );
   }
 
@@ -86,27 +85,6 @@ class LeaguesScreen extends StatelessWidget {
         Text(league["name"]!,
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600)),
-      ],
-    );
-  }
-
-  Widget _buildBottomNavBar() {
-    return BottomNavigationBar(
-      currentIndex: 0,
-      selectedItemColor: Colors.blue,
-      unselectedItemColor: Colors.grey,
-      iconSize: 25.0,
-      items: [
-        BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.magnifyingGlass), label: "Search"),
-        BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.house), label: "Leagues"),
-        BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.calendarDays), label: "Schedule"),
-        BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.peopleGroup), label: "Teams"),
-        BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.user), label: "Profile"),
       ],
     );
   }

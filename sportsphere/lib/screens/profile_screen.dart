@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sportsphere/screens/favorite_teams_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   @override
@@ -13,10 +14,23 @@ class ProfileScreen extends StatelessWidget {
             Text("TEAMS",
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
             Divider(),
-            _buildFavoriteOption("My Teams",
-                "Follow your favorite teams for personalized content and recommendations."),
-            _buildFavoriteOption("My Players",
-                "Follow your favorite players for personalized content and recommendations."),
+            _buildFavoriteOption(
+                context,
+                "My Teams",
+                "Follow your favorite teams for personalized content and recommendations.",
+                () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => FavoriteTeamsScreen()))),
+            _buildFavoriteOption(
+              context,
+              "My Players",
+              "Follow your favorite players for personalized content and recommendations.",
+              () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => FavoriteTeamsScreen())),
+            ),
             SizedBox(height: 16),
             Text("Others Options",
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
@@ -42,12 +56,13 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildFavoriteOption(String title, String subtitle) {
+  Widget _buildFavoriteOption(
+      BuildContext context, String title, String subtitle, VoidCallback onTap) {
     return ListTile(
-      contentPadding: EdgeInsets.zero,
       title: Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
-      subtitle: Text(subtitle, style: TextStyle(color: Colors.grey)),
-      trailing: Icon(Icons.add, color: Colors.black),
+      subtitle: Text(title, style: TextStyle(fontWeight: FontWeight.w300)),
+      trailing: Icon(Icons.arrow_forward_ios),
+      onTap: onTap,
     );
   }
 

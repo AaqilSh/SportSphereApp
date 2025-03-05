@@ -1,71 +1,51 @@
 import 'package:flutter/material.dart';
-
-// Import your page screens
-import './screens/home_screen.dart';
-import './screens/search_screen.dart';
-import 'screens/leagues_screen.dart';
-// import './screens/schedule_screen.dart';
-// import './screens/teams_screen.dart';
-// import './screens/profile_screen.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'providers/auth_provider.dart';
+import 'screens/login_screen.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => AuthProvider()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: BottomNavScreen(),
-    );
-  }
-}
-
-class BottomNavScreen extends StatefulWidget {
-  @override
-  _BottomNavScreenState createState() => _BottomNavScreenState();
-}
-
-class _BottomNavScreenState extends State<BottomNavScreen> {
-  int _selectedIndex = 1; // Default to "Leagues" tab
-
-  // List of screens
-  final List<Widget> _screens = [
-    SearchScreen(),
-    LeaguesScreen(),
-    // ScheduleScreen(),
-    // TeamsScreen(),
-    // ProfileScreen(),
-  ];
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: IndexedStack(
-        index: _selectedIndex,
-        children: _screens, // This keeps the state of each screen
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.blue,
-        unselectedItemColor: Colors.grey,
-        type: BottomNavigationBarType.fixed,
-        onTap: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.search), label: "Search"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.sports_soccer), label: "Leagues"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.calendar_today), label: "Schedule"),
-          BottomNavigationBarItem(icon: Icon(Icons.people), label: "Teams"),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
-        ],
-      ),
+    return ScreenUtilInit(
+      designSize: const Size(375, 812), // Adjust for your design reference
+      builder: (context, child) {
+        return MaterialApp(
+          title: 'SportSphere',
+          theme: ThemeData(
+            textTheme: TextTheme(
+              bodyMedium: TextStyle(
+                fontSize: 16.sp,
+                height: 1.5,
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.normal,
+                color: Colors.black,
+              ),
+              titleLarge: TextStyle(
+                fontSize: 24.sp,
+                height: 29.sp / 24.sp,
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.w800,
+                color: Colors.black,
+              ),
+            ),
+          ),
+          home: const LoginScreen(),
+        );
+      },
     );
   }
 }

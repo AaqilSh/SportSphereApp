@@ -72,23 +72,35 @@ class TeamDetailsScreen extends StatelessWidget {
       appBar: AppBar(title: Text(team.strTeam)),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('League: ${team.strLeague}',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            if (team.strStadium != null) Text('Stadium: ${team.strStadium}'),
-            if (team.strKeywords != null) Text('Keywords: ${team.strKeywords}'),
-            if (team.strWebsite != null)
-              InkWell(
-                onTap: () {},
-                child: Text('Website: ${team.strWebsite}',
-                    style: TextStyle(color: Colors.blue)),
+        child: SingleChildScrollView(
+          // Added this to make content scrollable
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'League: ${team.strLeague}',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
-            SizedBox(height: 10),
-            if (team.strDescriptionEN != null)
-              Text('Description: ${team.strDescriptionEN}'),
-          ],
+              SizedBox(height: 8),
+              if (team.strStadium != null) Text('Stadium: ${team.strStadium}'),
+              if (team.strKeywords != null)
+                Text('Keywords: ${team.strKeywords}'),
+              if (team.strWebsite != null)
+                InkWell(
+                  onTap: () {}, // Add actual website link handling
+                  child: Text(
+                    'Website: ${team.strWebsite}',
+                    style: TextStyle(color: Colors.blue),
+                  ),
+                ),
+              SizedBox(height: 10),
+              if (team.strDescriptionEN != null)
+                Text(
+                  'Description: ${team.strDescriptionEN}',
+                  softWrap: true, // Ensures text wraps properly
+                ),
+            ],
+          ),
         ),
       ),
     );

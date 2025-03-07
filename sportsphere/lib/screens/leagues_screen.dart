@@ -1,19 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'team_info_screen.dart'; // Import the new page
 
-class LeaguesScreen extends StatelessWidget {
-  final List<Map<String, String>> leagues = [
-    {"name": "Premier League", "logo": "assets/premier_league.png"},
-    {"name": "CBF League", "logo": "assets/cbf_league.png"},
-    {"name": "LIGUE 1 League", "logo": "assets/ligue1.png"},
-    {"name": "Korean League", "logo": "assets/korean_league.png"},
-    {"name": "La Liga", "logo": "assets/la_liga.png"},
-    {"name": "Scottish League", "logo": "assets/scottish_league.png"},
-    {"name": "Serie A", "logo": "assets/serie_a.png"},
-    {"name": "Ligue 1", "logo": "assets/ligue1_uber.png"},
-    {"name": "Eredivisie", "logo": "assets/eredivisie.png"},
-    {"name": "MLS", "logo": "assets/mls.png"},
-  ];
+class LeaguesScreen extends StatefulWidget {
+  @override
+  _LeaguesScreenState createState() => _LeaguesScreenState();
+}
+
+class _LeaguesScreenState extends State<LeaguesScreen> {
+  Future<List<dynamic>> fetchTeams() async {
+    final String apiKey = "a0ae70bf7c6687247992d15ddff92bfb";
+    final String url =
+        "https://v3.football.api-sports.io/teams?league=39&season=2023";
+
+    final response = await http.get(
+      Uri.parse(url),
+      headers: {'x-rapidapi-key': apiKey},
+    );
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> data = json.decode(response.body);
+      return data['response']; // List of teams
+    } else {
+      throw Exception("Failed to load teams");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,11 +34,11 @@ class LeaguesScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: Text("Leagues",
-            style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                color: Colors.black)),
+        title: Text(
+          "Leagues",
+          style: TextStyle(
+              fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black),
+        ),
         centerTitle: false,
       ),
       body: Padding(
@@ -34,31 +46,36 @@ class LeaguesScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("All Leagues",
-                    style:
-                        TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                TextButton(
-                  onPressed: () {},
-                  child:
-                      Text("View all >", style: TextStyle(color: Colors.red)),
-                ),
-              ],
+            Text(
+              "Premier League",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 10),
+
+            // Fetch and display Premier League teams
             Expanded(
-              child: GridView.builder(
-                itemCount: leagues.length,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  crossAxisSpacing: 12,
-                  mainAxisSpacing: 12,
-                  childAspectRatio: 0.9,
-                ),
-                itemBuilder: (context, index) {
-                  return _buildLeagueCard(leagues[index]);
+              child: FutureBuilder<List<dynamic>>(
+                future: fetchTeams(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text("Error: ${snapshot.error}"));
+                  } else {
+                    final teams = snapshot.data!;
+                    return GridView.builder(
+                      itemCount: teams.length,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                        crossAxisSpacing: 12,
+                        mainAxisSpacing: 12,
+                        childAspectRatio: 0.9,
+                      ),
+                      itemBuilder: (context, index) {
+                        return _buildTeamCard(context, teams[index]);
+                      },
+                    );
+                  }
                 },
               ),
             ),
@@ -68,24 +85,40 @@ class LeaguesScreen extends StatelessWidget {
     );
   }
 
-  // 🏆 League Card UI
-  Widget _buildLeagueCard(Map<String, String> league) {
-    return Column(
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(12),
-            boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 4)],
+  // 🏆 Team Card UI with Navigation
+  Widget _buildTeamCard(BuildContext context, dynamic teamData) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => TeamInfoScreen(teamData: teamData),
           ),
-          padding: EdgeInsets.all(10),
-          child: Image.asset(league["logo"]!, width: 50, height: 50),
-        ),
-        SizedBox(height: 8),
-        Text(league["name"]!,
+        );
+      },
+      child: Column(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
+              boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 4)],
+            ),
+            padding: EdgeInsets.all(10),
+            child: Image.network(
+              teamData['team']['logo'],
+              width: 50,
+              height: 50,
+            ),
+          ),
+          SizedBox(height: 8),
+          Text(
+            teamData['team']['name'],
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600)),
-      ],
+            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+          ),
+        ],
+      ),
     );
   }
 }

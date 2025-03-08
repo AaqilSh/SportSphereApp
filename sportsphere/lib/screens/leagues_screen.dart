@@ -92,7 +92,8 @@ class _LeaguesScreenState extends State<LeaguesScreen> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => TeamInfoScreen(teamData: teamData),
+            builder: (context) =>
+                TeamInfoScreen(teamId: teamData['team']['id']),
           ),
         );
       },

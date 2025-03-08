@@ -19,7 +19,7 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
     SearchScreen(),
     LeaguesScreen(),
     ScheduleScreen(),
-    TeamsScreen(),
+    PlayersScreen(),
     ProfileScreen(),
   ];
 

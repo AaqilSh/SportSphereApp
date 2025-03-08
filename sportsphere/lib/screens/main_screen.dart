@@ -18,7 +18,7 @@ class _MainScreenState extends State<MainScreen> {
     SearchScreen(),
     LeaguesScreen(),
     ScheduleScreen(),
-    TeamsScreen(),
+    PlayersScreen(),
     ProfileScreen(),
   ];
 

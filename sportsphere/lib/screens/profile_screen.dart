@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sportsphere/screens/app_info_screen.dart';
 import 'package:sportsphere/screens/favorite_players.screen.dart';
 import 'package:sportsphere/screens/favorite_teams_screen.dart';
 import 'package:sportsphere/screens/notification_scree.dart';
@@ -78,7 +79,7 @@ class ProfileScreen extends StatelessWidget {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => PrivacySettingsScreen()),
+            MaterialPageRoute(builder: (context) => AppInfoScreen()),
           );
         },
       ),

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:sportsphere/screens/accesibility_screen.dart';
 import 'package:sportsphere/screens/app_info_screen.dart';
+import 'package:sportsphere/screens/customer_support_screen.dart';
 import 'package:sportsphere/screens/favorite_players.screen.dart';
 import 'package:sportsphere/screens/favorite_teams_screen.dart';
-import 'package:sportsphere/screens/notification_scree.dart';
+import 'package:sportsphere/screens/notification_screen.dart';
 import 'package:sportsphere/screens/privacy_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -71,18 +73,26 @@ class ProfileScreen extends StatelessWidget {
   }
 
   Widget _buildSettingsOption(String title, BuildContext context) {
-    return Builder(
-      builder: (context) => ListTile(
-        contentPadding: EdgeInsets.zero,
-        title: Text(title),
-        trailing: Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
-        onTap: () {
+    final Map<String, Widget> routes = {
+      'App info': AppInfoScreen(),
+      'Privacy': PrivacySettingsScreen(),
+      'Customer Support': CustomerSupportScreen(),
+      'Accessibility': AccessibilityScreen(),
+      'Notifications': NotificationSettingsScreen(),
+    };
+
+    return ListTile(
+      contentPadding: EdgeInsets.zero,
+      title: Text(title),
+      trailing: Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
+      onTap: () {
+        if (routes.containsKey(title)) {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => AppInfoScreen()),
+            MaterialPageRoute(builder: (context) => routes[title]!),
           );
-        },
-      ),
+        }
+      },
     );
   }
 }

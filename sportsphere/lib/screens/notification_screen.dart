@@ -44,7 +44,7 @@ class _NotificationSettingsScreenState
       appBar: AppBar(title: Text('Notification Settings')),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text('Enable Notifications'),
             Switch(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sportsphere/screens/favorite_players.screen.dart';
 import 'package:sportsphere/screens/favorite_teams_screen.dart';
 import 'package:sportsphere/screens/notification_scree.dart';
+import 'package:sportsphere/screens/privacy_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   @override
@@ -77,8 +78,7 @@ class ProfileScreen extends StatelessWidget {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(
-                builder: (context) => NotificationSettingsScreen()),
+            MaterialPageRoute(builder: (context) => PrivacySettingsScreen()),
           );
         },
       ),

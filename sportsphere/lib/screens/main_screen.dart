@@ -4,7 +4,7 @@ import 'package:sportsphere/screens/profile_screen.dart';
 import 'search_screen.dart';
 import 'leagues_screen.dart';
 import 'schedule_screen.dart';
-import 'teams_screen.dart';
+import 'player_screen.dart';
 
 class MainScreen extends StatefulWidget {
   @override

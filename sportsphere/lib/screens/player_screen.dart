@@ -43,8 +43,17 @@ class TopScorersScreen extends StatefulWidget {
 }
 
 class _TopScorersScreenState extends State<TopScorersScreen> {
-  final List<int> leagueIds = [39, 140, 61, 78, 135, 88]; // Example leagues
-  Map<int, List<Map<String, dynamic>>> topScorers = {};
+  final Map<int, String> leagues = {
+    39: "Premier League",
+    735: "La Liga",
+    61: "Ligue 1",
+    78: "Bundesliga",
+    135: "Serie A",
+    88: "Eredivisie"
+  };
+
+  Map<int, List<dynamic>> topScorers = {};
+
   bool isLoading = true;
 
   @override
@@ -54,7 +63,9 @@ class _TopScorersScreenState extends State<TopScorersScreen> {
   }
 
   Future<void> fetchTopScorers() async {
-    for (int leagueId in leagueIds) {
+    for (var entry in leagues.entries) {
+      int leagueId = entry.key;
+      String leagueName = entry.value;
       final response = await http.get(
         Uri.parse(
             "https://v3.football.api-sports.io/players/topscorers?season=2023&league=$leagueId"),
@@ -89,23 +100,28 @@ class _TopScorersScreenState extends State<TopScorersScreen> {
       appBar: AppBar(title: Text("Top Scorers")),
       body: isLoading
           ? Center(child: CircularProgressIndicator())
-          : ListView(
-              children: leagueIds.map((leagueId) {
+          : ListView.builder(
+              itemCount: leagues.length,
+              itemBuilder: (context, index) {
+                int leagueId = leagues.keys.elementAt(index);
+                String leagueName = leagues.values.elementAt(index);
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text("League $leagueId",
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(leagueName,
                           style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold)),
+                              fontSize: 20, fontWeight: FontWeight.bold)),
                     ),
-                    ...topScorers[leagueId]
-                            ?.map((player) => PlayerCard(player: player)) ??
-                        [],
+                    if (topScorers.containsKey(leagueId))
+                      ...topScorers[leagueId]!
+                          .map((player) => PlayerCard(player: player))
+                          .toList(),
+                    Divider(),
                   ],
                 );
-              }).toList(),
+              },
             ),
     );
   }
@@ -117,8 +133,16 @@ class TopAssistsScreen extends StatefulWidget {
 }
 
 class _TopAssistsScreenState extends State<TopAssistsScreen> {
-  final List<int> leagueIds = [39, 140, 61, 78, 135, 88];
-  Map<int, List<Map<String, dynamic>>> topAssists = {};
+  final Map<int, String> leagues = {
+    39: "Premier League",
+    735: "La Liga",
+    61: "Ligue 1",
+    78: "Bundesliga",
+    135: "Serie A",
+    88: "Eredivisie"
+  };
+
+  Map<int, List<dynamic>> topAssists = {};
   bool isLoading = true;
 
   @override
@@ -128,7 +152,9 @@ class _TopAssistsScreenState extends State<TopAssistsScreen> {
   }
 
   Future<void> fetchTopAssists() async {
-    for (int leagueId in leagueIds) {
+    for (var entry in leagues.entries) {
+      int leagueId = entry.key;
+      String leagueName = entry.value;
       final response = await http.get(
         Uri.parse(
             "https://v3.football.api-sports.io/players/topassists?season=2023&league=$leagueId"),
@@ -165,23 +191,28 @@ class _TopAssistsScreenState extends State<TopAssistsScreen> {
       appBar: AppBar(title: Text("Top Assists")),
       body: isLoading
           ? Center(child: CircularProgressIndicator())
-          : ListView(
-              children: leagueIds.map((leagueId) {
+          : ListView.builder(
+              itemCount: leagues.length,
+              itemBuilder: (context, index) {
+                int leagueId = leagues.keys.elementAt(index);
+                String leagueName = leagues.values.elementAt(index);
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text("League $leagueId",
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(leagueName,
                           style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold)),
+                              fontSize: 20, fontWeight: FontWeight.bold)),
                     ),
-                    ...topAssists[leagueId]
-                            ?.map((player) => PlayerCard(player: player)) ??
-                        [],
+                    if (topAssists.containsKey(leagueId))
+                      ...topAssists[leagueId]!
+                          .map((player) => PlayerCard(player: player))
+                          .toList(),
+                    Divider(),
                   ],
                 );
-              }).toList(),
+              },
             ),
     );
   }

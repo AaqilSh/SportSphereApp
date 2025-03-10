@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:sportsphere/screens/player_card.dart';
+
 class TopAssistsScreen extends StatefulWidget {
   @override
   State<TopAssistsScreen> createState() => _TopAssistsScreenState();

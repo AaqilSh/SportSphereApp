@@ -3,9 +3,10 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class TeamInfoScreen extends StatefulWidget {
-  final int teamId; // Use team ID to fetch data
-
-  TeamInfoScreen({required this.teamId});
+  final int leagueId;
+  final int teamId;
+  const TeamInfoScreen({required this.leagueId, required this.teamId, Key? key})
+      : super(key: key);
 
   @override
   _TeamInfoScreenState createState() => _TeamInfoScreenState();
@@ -23,8 +24,9 @@ class _TeamInfoScreenState extends State<TeamInfoScreen> {
 
   Future<void> fetchTeamData() async {
     final String apiKey = "a0ae70bf7c6687247992d15ddff92bfb";
+
     final String apiUrl =
-        "https://v3.football.api-sports.io/teams/statistics?league=39&team=33&season=2022";
+        "https://v3.football.api-sports.io/teams/statistics?league=${widget.leagueId}&team=${widget.teamId}&season=2023";
 
     try {
       final response = await http.get(

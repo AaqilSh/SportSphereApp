@@ -6,7 +6,8 @@ class SearchScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Search Teams')),
+      appBar:
+          AppBar(title: Text('Search Teams'), automaticallyImplyLeading: false),
       body: Column(
         children: [
           Padding(

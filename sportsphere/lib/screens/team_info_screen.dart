@@ -114,14 +114,18 @@ class _TeamInfoScreenState extends State<TeamInfoScreen> {
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold)),
                       SizedBox(height: 10),
-                      _buildStatRow(
-                          "Goals For",
-                          teamData!['response']['goals']['for']['total']
-                              .toString()),
-                      _buildStatRow(
-                          "Goals Against",
-                          teamData!['response']['goals']['against']['total']
-                              .toString()),
+                      Container(
+                        child: _buildStatRow(
+                            "Goals For",
+                            teamData!['response']['goals']['for']['total']
+                                .toString()),
+                      ),
+                      Container(
+                        child: _buildStatRow(
+                            "Goals Against",
+                            teamData!['response']['goals']['against']['total']
+                                .toString()),
+                      ),
                       SizedBox(height: 20),
 
                       // Form
@@ -160,7 +164,7 @@ class _TeamInfoScreenState extends State<TeamInfoScreen> {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 4),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Text(label,
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),

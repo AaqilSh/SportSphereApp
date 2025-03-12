@@ -3,7 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'profile_screen.dart';
 import 'schedule_screen.dart';
 import 'search_screen.dart';
-import 'leagues_screen.dart';
+import 'teams_screen.dart';
 import 'player_screen.dart';
 
 class BottomNavScreen extends StatefulWidget {
@@ -47,11 +47,11 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
           BottomNavigationBarItem(
               icon: FaIcon(FontAwesomeIcons.magnifyingGlass), label: "Search"),
           BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.house), label: "Leagues"),
+              icon: FaIcon(FontAwesomeIcons.house), label: "Teams"),
           BottomNavigationBarItem(
               icon: FaIcon(FontAwesomeIcons.calendarDays), label: "Schedule"),
           BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.peopleGroup), label: "Teams"),
+              icon: FaIcon(FontAwesomeIcons.peopleGroup), label: "Players"),
           BottomNavigationBarItem(
               icon: FaIcon(FontAwesomeIcons.user), label: "Profile"),
         ],

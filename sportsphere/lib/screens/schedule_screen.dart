@@ -65,7 +65,10 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Premier League Fixtures")),
+      appBar: AppBar(
+        title: Text("Premier League Fixtures"),
+        automaticallyImplyLeading: false,
+      ),
       body: isLoading
           ? Center(child: CircularProgressIndicator())
           : hasError

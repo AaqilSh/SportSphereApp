@@ -71,10 +71,11 @@ class _LeaguesScreenState extends State<LeaguesScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: Text(
-          "Leagues",
+          "Teams",
           style: TextStyle(
               fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black),
         ),
+        automaticallyImplyLeading: false,
         centerTitle: false,
       ),
       body: isLoading

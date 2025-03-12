@@ -15,8 +15,8 @@ class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0; // Default screen index
 
   final List<Widget> _screens = [
-    SearchScreen(),
     LeaguesScreen(),
+    SearchScreen(),
     ScheduleScreen(),
     PlayersScreen(),
     ProfileScreen(),
@@ -41,9 +41,9 @@ class _MainScreenState extends State<MainScreen> {
         iconSize: 25.0,
         items: [
           BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.magnifyingGlass), label: "Search"),
-          BottomNavigationBarItem(
               icon: FaIcon(FontAwesomeIcons.house), label: "Teams"),
+          BottomNavigationBarItem(
+              icon: FaIcon(FontAwesomeIcons.magnifyingGlass), label: "Search"),
           BottomNavigationBarItem(
               icon: FaIcon(FontAwesomeIcons.calendarDays), label: "Schedule"),
           BottomNavigationBarItem(

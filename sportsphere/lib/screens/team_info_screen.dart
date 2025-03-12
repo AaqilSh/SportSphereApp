@@ -24,7 +24,6 @@ class _TeamInfoScreenState extends State<TeamInfoScreen> {
 
   Future<void> fetchTeamData() async {
     final String apiKey = "a0ae70bf7c6687247992d15ddff92bfb";
-
     final String apiUrl =
         "https://v3.football.api-sports.io/teams/statistics?league=${widget.leagueId}&team=${widget.teamId}&season=2023";
 
@@ -55,14 +54,16 @@ class _TeamInfoScreenState extends State<TeamInfoScreen> {
     return Scaffold(
       backgroundColor: Color(0xFFF8F9FC),
       appBar: AppBar(
-        title: Text(teamData?['response']?['team']?['name'] ?? "Loading..."),
+        title: Text(isLoading
+            ? "Loading..."
+            : teamData?['response']?['team']?['name'] ?? "Team Info"),
         backgroundColor: Colors.deepPurpleAccent,
       ),
       body: isLoading
           ? Center(child: CircularProgressIndicator())
           : teamData == null || teamData!['response'] == null
               ? Center(child: Text("Failed to load team data"))
-              : Padding(
+              : SingleChildScrollView(
                   padding: EdgeInsets.all(16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -75,7 +76,7 @@ class _TeamInfoScreenState extends State<TeamInfoScreen> {
                           height: 100,
                         ),
                       ),
-                      SizedBox(height: 20),
+                      SizedBox(height: 10),
 
                       // Team Name
                       Text(
@@ -87,53 +88,47 @@ class _TeamInfoScreenState extends State<TeamInfoScreen> {
                       SizedBox(height: 20),
 
                       // Fixtures
-                      Text("Fixtures",
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold)),
-                      SizedBox(height: 10),
-                      _buildStatRow(
-                          "Played",
-                          teamData!['response']['fixtures']['played']['total']
-                              .toString()),
-                      _buildStatRow(
-                          "Wins",
-                          teamData!['response']['fixtures']['wins']['total']
-                              .toString()),
-                      _buildStatRow(
-                          "Draws",
-                          teamData!['response']['fixtures']['draws']['total']
-                              .toString()),
-                      _buildStatRow(
-                          "Losses",
-                          teamData!['response']['fixtures']['loses']['total']
-                              .toString()),
-                      SizedBox(height: 20),
+                      _buildSectionTitle("Fixtures"),
+                      _buildStatCard([
+                        _buildStatRow(
+                            "Played",
+                            teamData!['response']['fixtures']['played']['total']
+                                .toString()),
+                        _buildStatRow(
+                            "Wins",
+                            teamData!['response']['fixtures']['wins']['total']
+                                .toString()),
+                        _buildStatRow(
+                            "Draws",
+                            teamData!['response']['fixtures']['draws']['total']
+                                .toString()),
+                        _buildStatRow(
+                            "Losses",
+                            teamData!['response']['fixtures']['loses']['total']
+                                .toString()),
+                      ]),
 
                       // Goals
-                      Text("Goals",
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold)),
-                      SizedBox(height: 10),
-                      Container(
-                        child: _buildStatRow(
+                      _buildSectionTitle("Goals"),
+                      _buildStatCard([
+                        _buildStatRow(
                             "Goals For",
                             teamData!['response']['goals']['for']['total']
-                                .toString()),
-                      ),
-                      Container(
-                        child: _buildStatRow(
+                                        ?['total']
+                                    ?.toString() ??
+                                "N/A"),
+                        _buildStatRow(
                             "Goals Against",
                             teamData!['response']['goals']['against']['total']
-                                .toString()),
-                      ),
-                      SizedBox(height: 20),
+                                        ?['total']
+                                    ?.toString() ??
+                                "N/A"),
+                      ]),
 
                       // Form
-                      Text("Form",
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold)),
-                      SizedBox(height: 10),
+                      _buildSectionTitle("Form"),
                       Wrap(
+                        spacing: 8,
                         children: teamData!['response']['form']
                             .split('')
                             .map<Widget>((char) {
@@ -142,15 +137,15 @@ class _TeamInfoScreenState extends State<TeamInfoScreen> {
                               : char == 'L'
                                   ? Colors.red
                                   : Colors.grey;
-                          return Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 2),
-                            child: Text(
+                          return Chip(
+                            label: Text(
                               char,
                               style: TextStyle(
-                                  fontSize: 18,
+                                  fontSize: 16,
                                   fontWeight: FontWeight.bold,
-                                  color: color),
+                                  color: Colors.white),
                             ),
+                            backgroundColor: color,
                           );
                         }).toList(),
                       ),
@@ -160,14 +155,37 @@ class _TeamInfoScreenState extends State<TeamInfoScreen> {
     );
   }
 
+  Widget _buildSectionTitle(String title) {
+    return Padding(
+      padding: EdgeInsets.only(top: 20, bottom: 10),
+      child: Text(
+        title,
+        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      ),
+    );
+  }
+
+  Widget _buildStatCard(List<Widget> children) {
+    return Card(
+      elevation: 3,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      margin: EdgeInsets.symmetric(vertical: 8),
+      child: Padding(
+        padding: EdgeInsets.all(12),
+        child: Column(children: children),
+      ),
+    );
+  }
+
   Widget _buildStatRow(String label, String value) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 4),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label,
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+          Expanded(
+              child: Text(label,
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500))),
           Text(value,
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
         ],

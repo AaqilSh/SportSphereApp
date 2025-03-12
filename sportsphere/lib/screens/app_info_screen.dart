@@ -17,7 +17,7 @@ class AppInfoScreen extends StatelessWidget {
             SizedBox(height: 20),
             ListTile(
               leading: Icon(Icons.info, color: Colors.blue),
-              title: Text('App Name: Sports Tracker'),
+              title: Text('App Name: SportSphere'),
             ),
             ListTile(
               leading: Icon(Icons.verified, color: Colors.green),
@@ -25,7 +25,7 @@ class AppInfoScreen extends StatelessWidget {
             ),
             ListTile(
               leading: Icon(Icons.developer_mode, color: Colors.orange),
-              title: Text('Developer: Your Company Name'),
+              title: Text('Developer: Aqil Shihab'),
             ),
             Divider(),
             ListTile(

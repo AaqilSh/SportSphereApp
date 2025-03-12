@@ -19,9 +19,19 @@ class _LeaguesScreenState extends State<LeaguesScreen> {
     "Eredivisie": 88,
   };
 
-  Future<Map<String, List<Map<String, dynamic>>>> fetchAllLeaguesTeams() async {
-    Map<String, List<Map<String, dynamic>>> allTeams = {};
+  Map<String, List<Map<String, dynamic>>> allTeams = {};
+  bool isLoading = true; // Track loading status
 
+  @override
+  void initState() {
+    super.initState();
+    fetchAllLeaguesTeams();
+  }
+
+  Future<void> fetchAllLeaguesTeams() async {
+    setState(() => isLoading = true);
+
+    Map<String, List<Map<String, dynamic>>> tempAllTeams = {};
     List<Future<void>> fetchTasks = leagues.entries.map((entry) async {
       final int leagueId = entry.value;
       final String url =
@@ -33,20 +43,24 @@ class _LeaguesScreenState extends State<LeaguesScreen> {
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> data = json.decode(response.body);
-        allTeams[entry.key] = (data['response'] as List<dynamic>)
+        tempAllTeams[entry.key] = (data['response'] as List<dynamic>)
             .map<Map<String, dynamic>>((team) {
           return {
-            "leagueId": leagueId, // ✅ Store league ID properly
-            "team": team['team'], // ✅ Store team details
+            "leagueId": leagueId,
+            "team": team['team'],
           };
         }).toList();
       } else {
-        allTeams[entry.key] = [];
+        tempAllTeams[entry.key] = [];
       }
     }).toList();
 
-    await Future.wait(fetchTasks);
-    return allTeams;
+    await Future.wait(fetchTasks); // Wait for all fetches to complete
+
+    setState(() {
+      allTeams = tempAllTeams;
+      isLoading = false; // Hide loading when all fetching is done
+    });
   }
 
   @override
@@ -63,22 +77,14 @@ class _LeaguesScreenState extends State<LeaguesScreen> {
         ),
         centerTitle: false,
       ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16),
-        child: FutureBuilder<Map<String, List<Map<String, dynamic>>>>(
-          future: fetchAllLeaguesTeams(), // ✅ Corrected type
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
-            } else if (snapshot.hasError) {
-              return Center(child: Text("Error: ${snapshot.error}"));
-            } else {
-              final allTeams = snapshot.data ?? {};
-              return ListView(
+      body: isLoading
+          ? Center(child: CircularProgressIndicator()) // Show loading screen
+          : Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: ListView(
                 children: allTeams.entries.map((entry) {
                   final String leagueName = entry.key;
-                  final List<Map<String, dynamic>> teams =
-                      entry.value; // ✅ Corrected type
+                  final List<Map<String, dynamic>> teams = entry.value;
 
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -101,19 +107,16 @@ class _LeaguesScreenState extends State<LeaguesScreen> {
                         ),
                         itemBuilder: (context, index) {
                           final teamData = teams[index];
-                          return _buildTeamCard(context, teamData['leagueId'],
-                              teamData['team']); // ✅ Pass correct values
+                          return _buildTeamCard(
+                              context, teamData['leagueId'], teamData['team']);
                         },
                       ),
                       SizedBox(height: 20),
                     ],
                   );
                 }).toList(),
-              );
-            }
-          },
-        ),
-      ),
+              ),
+            ),
     );
   }
 }
@@ -126,8 +129,8 @@ Widget _buildTeamCard(
         context,
         MaterialPageRoute(
           builder: (context) => TeamInfoScreen(
-            leagueId: leagueId, // ✅ Pass league ID
-            teamId: teamData['id'], // ✅ Pass team ID
+            leagueId: leagueId,
+            teamId: teamData['id'],
           ),
         ),
       );

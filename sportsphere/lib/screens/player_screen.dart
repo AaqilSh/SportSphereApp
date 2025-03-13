@@ -11,33 +11,52 @@ class PlayersScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Players"),
-        automaticallyImplyLeading: false,
+        centerTitle: true,
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+      body: Padding(
+        padding: EdgeInsets.all(16),
+        child: ListView(
           children: [
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => TopScorersScreen()));
-              },
-              child: Text("Top Scorers"),
+            _buildPlayerCategoryCard(
+              context,
+              title: "Top Scorers",
+              subtitle: "See the highest goal scorers",
+              icon: Icons.sports_soccer,
+              screen: TopScorersScreen(),
             ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => TopAssistsScreen()));
-              },
-              child: Text("Top Assists"),
+            SizedBox(height: 16),
+            _buildPlayerCategoryCard(
+              context,
+              title: "Top Assists",
+              subtitle: "See players with the most assists",
+              icon: Icons.assist_walker,
+              screen: TopAssistsScreen(),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildPlayerCategoryCard(BuildContext context,
+      {required String title,
+      required String subtitle,
+      required IconData icon,
+      required Widget screen}) {
+    return Card(
+      elevation: 3,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: ListTile(
+        leading: Icon(icon, size: 40, color: Colors.blueAccent),
+        title: Text(title,
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+        subtitle:
+            Text(subtitle, style: TextStyle(fontSize: 14, color: Colors.grey)),
+        trailing: Icon(Icons.arrow_forward_ios, color: Colors.grey),
+        onTap: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => screen));
+        },
       ),
     );
   }

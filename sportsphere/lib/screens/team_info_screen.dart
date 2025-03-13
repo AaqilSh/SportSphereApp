@@ -109,60 +109,93 @@ class _TeamInfoScreenState extends State<TeamInfoScreen> {
                       ]),
 
                       _buildSectionTitle("Goals"),
-                      _buildStatCard([
-                        _buildDetailedStatRow(
-                          "Goals For",
-                          teamData!['response']['goals']['for']['total']
-                                      ['total']
-                                  ?.toString() ??
-                              "N/A",
-                          teamData!['response']['goals']['for']['total']['home']
-                                  ?.toString() ??
-                              "N/A",
-                          teamData!['response']['goals']['for']['total']['away']
-                                  ?.toString() ??
-                              "N/A",
+                      Card(
+                        elevation: 2,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12)),
+                        child: Padding(
+                          padding: EdgeInsets.all(16),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              _buildGoalStat(
+                                "Goals For",
+                                teamData!['response']['goals']['for']['total']
+                                            ['total']
+                                        ?.toString() ??
+                                    "N/A",
+                                teamData!['response']['goals']['for']['total']
+                                            ['home']
+                                        ?.toString() ??
+                                    "N/A",
+                                teamData!['response']['goals']['for']['total']
+                                            ['away']
+                                        ?.toString() ??
+                                    "N/A",
+                              ),
+                              Divider(thickness: 1),
+                              _buildGoalStat(
+                                "Goals Against",
+                                teamData!['response']['goals']['against']
+                                            ['total']['total']
+                                        ?.toString() ??
+                                    "N/A",
+                                teamData!['response']['goals']['against']
+                                            ['total']['home']
+                                        ?.toString() ??
+                                    "N/A",
+                                teamData!['response']['goals']['against']
+                                            ['total']['away']
+                                        ?.toString() ??
+                                    "N/A",
+                              ),
+                            ],
+                          ),
                         ),
-                        _buildDetailedStatRow(
-                          "Goals Against",
-                          teamData!['response']['goals']['against']['total']
-                                      ['total']
-                                  ?.toString() ??
-                              "N/A",
-                          teamData!['response']['goals']['against']['total']
-                                      ['home']
-                                  ?.toString() ??
-                              "N/A",
-                          teamData!['response']['goals']['against']['total']
-                                      ['away']
-                                  ?.toString() ??
-                              "N/A",
-                        ),
-                      ]),
+                      ),
 
                       // Form
                       _buildSectionTitle("Form"),
-                      Wrap(
-                        spacing: 8,
-                        children: teamData!['response']['form']
-                            .split('')
-                            .map<Widget>((char) {
-                          Color color = char == 'W'
-                              ? Colors.green
-                              : char == 'L'
-                                  ? Colors.red
-                                  : Colors.grey;
-                          return Chip(
-                            label: Text(
-                              char,
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
+                      Card(
+                        elevation: 2,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12)),
+                        child: Padding(
+                          padding: EdgeInsets.all(12),
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Wrap(
+                              spacing: 10,
+                              runSpacing: 8,
+                              alignment: WrapAlignment.center,
+                              children: teamData!['response']['form']
+                                  .split('')
+                                  .map<Widget>((char) {
+                                Color color = char == 'W'
+                                    ? Colors.green
+                                    : char == 'L'
+                                        ? Colors.red
+                                        : Colors.grey;
+                                return Container(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 12, vertical: 8),
+                                  decoration: BoxDecoration(
+                                    color: color,
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: Text(
+                                    char,
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                );
+                              }).toList(),
                             ),
-                            backgroundColor: color,
-                          );
-                        }).toList(),
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -230,5 +263,37 @@ Widget _buildDetailedStatRow(
         ),
       ],
     ),
+  );
+}
+
+Widget _buildGoalItem(String label, String value) {
+  return Column(
+    children: [
+      Text(label,
+          style: TextStyle(
+              fontSize: 14, fontWeight: FontWeight.w500, color: Colors.grey)),
+      SizedBox(height: 4),
+      Text(value, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+    ],
+  );
+}
+
+Widget _buildGoalStat(String title, String total, String home, String away) {
+  return Column(
+    children: [
+      Text(
+        title,
+        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+      ),
+      SizedBox(height: 8),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          _buildGoalItem("Total", total),
+          _buildGoalItem("Home", home),
+          _buildGoalItem("Away", away),
+        ],
+      ),
+    ],
   );
 }

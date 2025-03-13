@@ -108,21 +108,36 @@ class _TeamInfoScreenState extends State<TeamInfoScreen> {
                                 .toString()),
                       ]),
 
-                      // Goals
                       _buildSectionTitle("Goals"),
                       _buildStatCard([
-                        _buildStatRow(
-                            "Goals For",
-                            teamData!['response']['goals']['for']['total']
-                                        ?['total']
-                                    ?.toString() ??
-                                "N/A"),
-                        _buildStatRow(
-                            "Goals Against",
-                            teamData!['response']['goals']['against']['total']
-                                        ?['total']
-                                    ?.toString() ??
-                                "N/A"),
+                        _buildDetailedStatRow(
+                          "Goals For",
+                          teamData!['response']['goals']['for']['total']
+                                      ['total']
+                                  ?.toString() ??
+                              "N/A",
+                          teamData!['response']['goals']['for']['total']['home']
+                                  ?.toString() ??
+                              "N/A",
+                          teamData!['response']['goals']['for']['total']['away']
+                                  ?.toString() ??
+                              "N/A",
+                        ),
+                        _buildDetailedStatRow(
+                          "Goals Against",
+                          teamData!['response']['goals']['against']['total']
+                                      ['total']
+                                  ?.toString() ??
+                              "N/A",
+                          teamData!['response']['goals']['against']['total']
+                                      ['home']
+                                  ?.toString() ??
+                              "N/A",
+                          teamData!['response']['goals']['against']['total']
+                                      ['away']
+                                  ?.toString() ??
+                              "N/A",
+                        ),
                       ]),
 
                       // Form
@@ -192,4 +207,28 @@ class _TeamInfoScreenState extends State<TeamInfoScreen> {
       ),
     );
   }
+}
+
+Widget _buildDetailedStatRow(
+    String label, String total, String home, String away) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 4),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(label,
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Text("Total: $total", style: TextStyle(fontSize: 14)),
+            Text("Home: $home",
+                style: TextStyle(fontSize: 14, color: Colors.green)),
+            Text("Away: $away",
+                style: TextStyle(fontSize: 14, color: Colors.red)),
+          ],
+        ),
+      ],
+    ),
+  );
 }

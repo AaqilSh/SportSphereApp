@@ -12,11 +12,11 @@ class _LeaguesScreenState extends State<LeaguesScreen> {
   final String apiKey = "a0ae70bf7c6687247992d15ddff92bfb";
   final Map<String, int> leagues = {
     "Premier League": 39,
-    "La Liga": 735,
-    "Bundesliga": 78,
-    "Serie A": 135,
-    "Ligue 1": 61,
-    "Eredivisie": 88,
+    // "La Liga": 735,
+    // "Bundesliga": 78,
+    // "Serie A": 135,
+    // "Ligue 1": 61,
+    // "Eredivisie": 88,
   };
 
   Map<String, List<Map<String, dynamic>>> allTeams = {};

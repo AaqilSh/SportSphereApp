@@ -95,16 +95,6 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                 ),
     );
   }
-
-  String formatDateTime(String dateTime) {
-    try {
-      DateTime parsedDate = DateTime.parse(dateTime).toLocal();
-      return DateFormat('dd MMM yyyy, hh:mm a').format(parsedDate);
-      // Example output: 06 Aug 2022, 11:30 AM
-    } catch (e) {
-      return "Invalid Date"; // Fallback for unexpected format
-    }
-  }
 }
 
 class FixtureCard extends StatelessWidget {
@@ -158,12 +148,22 @@ class FixtureCard extends StatelessWidget {
             Text("Venue: $venue", style: TextStyle(color: Colors.grey)),
             Align(
               alignment: Alignment.bottomRight,
-              child: Text(time,
+              child: Text(formatDateTime(time),
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
             ),
           ],
         ),
       ),
     );
+  }
+
+  String formatDateTime(String dateTime) {
+    try {
+      DateTime parsedDate = DateTime.parse(dateTime).toLocal();
+      return DateFormat('dd MMM yyyy, hh:mm a').format(parsedDate);
+      // Example output: 06 Aug 2022, 11:30 AM
+    } catch (e) {
+      return "Invalid Date"; // Fallback for unexpected format
+    }
   }
 }

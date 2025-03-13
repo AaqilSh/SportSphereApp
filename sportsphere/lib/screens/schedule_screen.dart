@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:intl/intl.dart';
 
 class ScheduleScreen extends StatefulWidget {
   @override
@@ -93,6 +94,16 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                   ),
                 ),
     );
+  }
+
+  String formatDateTime(String dateTime) {
+    try {
+      DateTime parsedDate = DateTime.parse(dateTime).toLocal();
+      return DateFormat('dd MMM yyyy, hh:mm a').format(parsedDate);
+      // Example output: 06 Aug 2022, 11:30 AM
+    } catch (e) {
+      return "Invalid Date"; // Fallback for unexpected format
+    }
   }
 }
 

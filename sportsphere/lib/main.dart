@@ -4,8 +4,10 @@ import 'package:provider/provider.dart';
 import 'package:sportsphere/providers/team_provider.dart';
 import 'providers/auth_provider.dart';
 import 'screens/login_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized(); // ADD THIS LINE
   runApp(
     MultiProvider(
       providers: [

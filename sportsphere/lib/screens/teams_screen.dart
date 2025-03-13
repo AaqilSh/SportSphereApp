@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'team_info_screen.dart'; // Import the new page
+import 'team_info_screen.dart';
 
 class LeaguesScreen extends StatefulWidget {
   @override
@@ -12,25 +13,21 @@ class _LeaguesScreenState extends State<LeaguesScreen> {
   final String apiKey = "a0ae70bf7c6687247992d15ddff92bfb";
   final Map<String, int> leagues = {
     "Premier League": 39,
-    // "La Liga": 735,
-    // "Bundesliga": 78,
-    // "Serie A": 135,
-    // "Ligue 1": 61,
-    // "Eredivisie": 88,
   };
 
   Map<String, List<Map<String, dynamic>>> allTeams = {};
-  bool isLoading = true; // Track loading status
+  bool isLoading = true;
+  List<Map<String, dynamic>> favoriteTeams = [];
 
   @override
   void initState() {
     super.initState();
     fetchAllLeaguesTeams();
+    loadFavoriteTeams();
   }
 
   Future<void> fetchAllLeaguesTeams() async {
     setState(() => isLoading = true);
-
     Map<String, List<Map<String, dynamic>>> tempAllTeams = {};
     List<Future<void>> fetchTasks = leagues.entries.map((entry) async {
       final int leagueId = entry.value;
@@ -47,7 +44,9 @@ class _LeaguesScreenState extends State<LeaguesScreen> {
             .map<Map<String, dynamic>>((team) {
           return {
             "leagueId": leagueId,
-            "team": team['team'],
+            "id": team['team']['id'],
+            "name": team['team']['name'],
+            "logo": team['team']['logo'],
           };
         }).toList();
       } else {
@@ -55,12 +54,42 @@ class _LeaguesScreenState extends State<LeaguesScreen> {
       }
     }).toList();
 
-    await Future.wait(fetchTasks); // Wait for all fetches to complete
-
+    await Future.wait(fetchTasks);
     setState(() {
       allTeams = tempAllTeams;
-      isLoading = false; // Hide loading when all fetching is done
+      isLoading = false;
     });
+  }
+
+  Future<void> loadFavoriteTeams() async {
+    final prefs = await SharedPreferences.getInstance();
+    final String? favoriteTeamsString = prefs.getString('favorite_teams');
+    if (favoriteTeamsString != null) {
+      setState(() {
+        favoriteTeams =
+            List<Map<String, dynamic>>.from(json.decode(favoriteTeamsString));
+      });
+    }
+  }
+
+  Future<void> toggleFavoriteTeam(Map<String, dynamic> team) async {
+    final prefs = await SharedPreferences.getInstance();
+    final teamExists =
+        favoriteTeams.any((favTeam) => favTeam["id"] == team["id"]);
+
+    setState(() {
+      if (teamExists) {
+        favoriteTeams.removeWhere((favTeam) => favTeam["id"] == team["id"]);
+      } else {
+        favoriteTeams.add(team);
+      }
+    });
+
+    await prefs.setString('favorite_teams', json.encode(favoriteTeams));
+  }
+
+  bool isFavorite(int teamId) {
+    return favoriteTeams.any((team) => team["id"] == teamId);
   }
 
   @override
@@ -79,7 +108,7 @@ class _LeaguesScreenState extends State<LeaguesScreen> {
         centerTitle: false,
       ),
       body: isLoading
-          ? Center(child: CircularProgressIndicator()) // Show loading screen
+          ? Center(child: CircularProgressIndicator())
           : Padding(
               padding: EdgeInsets.symmetric(horizontal: 16),
               child: ListView(
@@ -108,8 +137,7 @@ class _LeaguesScreenState extends State<LeaguesScreen> {
                         ),
                         itemBuilder: (context, index) {
                           final teamData = teams[index];
-                          return _buildTeamCard(
-                              context, teamData['leagueId'], teamData['team']);
+                          return _buildTeamCard(context, teamData);
                         },
                       ),
                       SizedBox(height: 20),
@@ -120,41 +148,49 @@ class _LeaguesScreenState extends State<LeaguesScreen> {
             ),
     );
   }
-}
 
-Widget _buildTeamCard(
-    BuildContext context, int leagueId, Map<String, dynamic> teamData) {
-  return GestureDetector(
-    onTap: () {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => TeamInfoScreen(
-            leagueId: leagueId,
-            teamId: teamData['id'],
+  Widget _buildTeamCard(BuildContext context, Map<String, dynamic> teamData) {
+    final bool favorite = isFavorite(teamData['id']);
+
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => TeamInfoScreen(
+              leagueId: teamData['leagueId'],
+              teamId: teamData['id'],
+            ),
           ),
+        );
+      },
+      child: Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        elevation: 3,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.network(
+              teamData['logo'],
+              width: 50,
+              height: 50,
+            ),
+            SizedBox(height: 8),
+            Text(
+              teamData['name'],
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+            ),
+            IconButton(
+              icon: Icon(
+                favorite ? Icons.favorite : Icons.favorite_border,
+                color: favorite ? Colors.red : Colors.black,
+              ),
+              onPressed: () => toggleFavoriteTeam(teamData),
+            ),
+          ],
         ),
-      );
-    },
-    child: Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      elevation: 3,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.network(
-            teamData['logo'],
-            width: 50,
-            height: 50,
-          ),
-          SizedBox(height: 8),
-          Text(
-            teamData['name'],
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-          ),
-        ],
       ),
-    ),
-  );
+    );
+  }
 }

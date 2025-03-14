@@ -1,6 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SignUpScreen extends StatelessWidget {
+  Future<void> signUp(String email, String password) async {
+    try {
+      UserCredential userCredential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      print("User signed up: ${userCredential.user!.email}");
+    } catch (e) {
+      print("Signup error: $e");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

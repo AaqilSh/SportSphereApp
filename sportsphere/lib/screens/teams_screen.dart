@@ -164,32 +164,52 @@ class _LeaguesScreenState extends State<LeaguesScreen> {
           ),
         );
       },
-      child: Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        elevation: 3,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.network(
-              teamData['logo'],
-              width: 50,
-              height: 50,
-            ),
-            SizedBox(height: 8),
-            Text(
-              teamData['name'],
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-            ),
-            IconButton(
-              icon: Icon(
-                favorite ? Icons.favorite : Icons.favorite_border,
-                color: favorite ? Colors.red : Colors.black,
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return Card(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            elevation: 3,
+            child: Padding(
+              padding: EdgeInsets.all(8),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Image.network(
+                    teamData['logo'],
+                    width: constraints.maxWidth *
+                        0.5, // Adjust image size dynamically
+                    height: constraints.maxWidth * 0.5,
+                    fit: BoxFit.contain,
+                  ),
+                  SizedBox(height: 4),
+                  Expanded(
+                    child: Text(
+                      teamData['name'],
+                      textAlign: TextAlign.center,
+                      style:
+                          TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  SizedBox(height: 4),
+                  IconButton(
+                    iconSize: constraints.maxWidth *
+                        0.2, // Adjust icon size dynamically
+                    padding: EdgeInsets.zero,
+                    constraints: BoxConstraints(),
+                    icon: Icon(
+                      favorite ? Icons.favorite : Icons.favorite_border,
+                      color: favorite ? Colors.red : Colors.black,
+                    ),
+                    onPressed: () => toggleFavoriteTeam(teamData),
+                  ),
+                ],
               ),
-              onPressed: () => toggleFavoriteTeam(teamData),
             ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }

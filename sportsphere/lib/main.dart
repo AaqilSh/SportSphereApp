@@ -5,9 +5,11 @@ import 'package:sportsphere/providers/team_provider.dart';
 import 'providers/auth_provider.dart';
 import 'screens/login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized(); // ADD THIS LINE
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(
     MultiProvider(
       providers: [
@@ -27,6 +29,7 @@ class MyApp extends StatelessWidget {
       designSize: const Size(375, 812), // Adjust for your design reference
       builder: (context, child) {
         return MaterialApp(
+          debugShowCheckedModeBanner: false,
           title: 'SportSphere',
           theme: ThemeData(
             textTheme: TextTheme(

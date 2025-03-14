@@ -95,7 +95,9 @@ class _LeaguesScreenState extends State<LeaguesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFF8F9FC),
+      backgroundColor: Colors.grey[200], // Light grey background
+
+      // backgroundColor: Color(0xFFF8F9FC),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -108,7 +110,13 @@ class _LeaguesScreenState extends State<LeaguesScreen> {
         centerTitle: false,
       ),
       body: isLoading
-          ? Center(child: CircularProgressIndicator())
+          ? Center(
+              child: Image.asset(
+                "assets/images/loading.gif", // Path to your GIF
+                width: 100, // Adjust size as needed
+                height: 100,
+              ),
+            )
           : Padding(
               padding: EdgeInsets.symmetric(horizontal: 16),
               child: ListView(

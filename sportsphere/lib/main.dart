@@ -2,14 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:sportsphere/providers/team_provider.dart';
-import 'providers/auth_provider.dart';
 import 'screens/login_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: FirebaseOptions(
+        apiKey: "AIzaSyCA98Zn2h10tpgzo7nQxwGORnoP0JL8e18",
+        authDomain: "sportsphere-b2e9e.firebaseapp.com",
+        projectId: "sportsphere-b2e9e",
+        storageBucket: "sportsphere-b2e9e.firebasestorage.app",
+        messagingSenderId: "470275251620",
+        appId: "1:470275251620:web:3c9cd7bdd3e6bce592b531",
+        measurementId: "G-0BLW2HVKVF"),
+  );
   runApp(
     MultiProvider(
       providers: [

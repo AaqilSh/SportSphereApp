@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sportsphere/screens/main_screen.dart';
-import 'package:sportsphere/screens/search_screen.dart';
 import 'package:sportsphere/screens/sign_up_screen.dart';
-import '../providers/auth_provider.dart';
-import 'home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -19,19 +16,31 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _isLoading = false;
   bool _isPasswordVisible = false;
 
-  void _login() async {
-    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+  Future<void> _login() async {
+    String email = _emailController.text.trim();
+    String password = _passwordController.text.trim();
+
+    if (email.isEmpty || password.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Email and Password cannot be empty!")),
+      );
+      return;
+    }
+
     setState(() => _isLoading = true);
 
     try {
-      authProvider.login(_emailController.text, _passwordController.text);
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const HomeScreen()),
+        MaterialPageRoute(builder: (context) => MainScreen()),
       );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(e.toString())),
+        SnackBar(content: Text("Login error: $e")),
       );
     } finally {
       setState(() => _isLoading = false);
@@ -47,28 +56,18 @@ class _LoginScreenState extends State<LoginScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // Logo
             Image.asset('assets/images/logo.png', height: 80),
             const SizedBox(height: 20),
-
-            // Welcome Text
-            Text(
-              'Welcome!',
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
+            Text('Welcome!', style: Theme.of(context).textTheme.titleLarge),
             const SizedBox(height: 10),
-            Text(
-              'Please login to continue using our app',
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
+            Text('Please login to continue using our app',
+                style: Theme.of(context).textTheme.bodyMedium),
             const SizedBox(height: 20),
-
-            // Email/Phone Input
             TextField(
               controller: _emailController,
               keyboardType: TextInputType.emailAddress,
               decoration: const InputDecoration(
-                labelText: 'Email/Phone',
+                labelText: 'Email',
                 border: OutlineInputBorder(),
               ),
             ),
@@ -86,16 +85,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         : Icons.visibility_off,
                   ),
                   onPressed: () {
-                    setState(() {
-                      _isPasswordVisible = !_isPasswordVisible;
-                    });
+                    setState(() => _isPasswordVisible = !_isPasswordVisible);
                   },
                 ),
               ),
             ),
             const SizedBox(height: 10),
-
-            // Forgot Password Link
             Align(
               alignment: Alignment.centerRight,
               child: TextButton(
@@ -106,22 +101,12 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             const SizedBox(height: 20),
-
-            // Login Button
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => MainScreen()),
-                  );
-                },
-                // onPressed: _login,
+                onPressed: _isLoading ? null : _login,
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 12),
-                  minimumSize: Size(0, 10),
-                  maximumSize: Size(5, 30),
                   backgroundColor: const Color.fromARGB(255, 6, 80, 141),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
@@ -135,20 +120,16 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
               ),
             ),
-
-            // Sign Up Link
             const SizedBox(height: 40),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text("Don't have an account? "),
                 GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SignUpScreen()),
-                    );
-                  },
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SignUpScreen()),
+                  ),
                   child: const Text(
                     'Sign up',
                     style: TextStyle(

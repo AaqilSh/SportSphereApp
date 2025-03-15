@@ -62,6 +62,7 @@ class SearchScreen extends StatelessWidget {
 }
 
 // TeamDetailsScreen
+
 class TeamDetailsScreen extends StatelessWidget {
   final Team team;
 
@@ -74,33 +75,54 @@ class TeamDetailsScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
-          // Added this to make content scrollable
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'League: ${team.strLeague}',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 8),
-              if (team.strStadium != null) Text('Stadium: ${team.strStadium}'),
-              if (team.strKeywords != null)
-                Text('Keywords: ${team.strKeywords}'),
-              if (team.strWebsite != null)
-                InkWell(
-                  onTap: () {}, // Add actual website link handling
+          child: Semantics(
+            label: "Team details screen for ${team.strTeam}",
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Semantics(
+                  label: "League: ${team.strLeague}",
                   child: Text(
-                    'Website: ${team.strWebsite}',
-                    style: TextStyle(color: Colors.blue),
+                    'League: ${team.strLeague}',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                 ),
-              SizedBox(height: 10),
-              if (team.strDescriptionEN != null)
-                Text(
-                  'Description: ${team.strDescriptionEN}',
-                  softWrap: true, // Ensures text wraps properly
-                ),
-            ],
+                SizedBox(height: 8),
+                if (team.strStadium != null)
+                  Semantics(
+                    label: "Stadium: ${team.strStadium}",
+                    child: Text('Stadium: ${team.strStadium}'),
+                  ),
+                if (team.strKeywords != null)
+                  Semantics(
+                    label: "Keywords: ${team.strKeywords}",
+                    child: Text('Keywords: ${team.strKeywords}'),
+                  ),
+                if (team.strWebsite != null)
+                  Semantics(
+                    label: "Visit the official website of ${team.strTeam}",
+                    button: true, // Indicates it's a tappable element
+                    child: InkWell(
+                      onTap: () {
+                        // Add actual website link handling
+                      },
+                      child: Text(
+                        'Website: ${team.strWebsite}',
+                        style: TextStyle(color: Colors.blue),
+                      ),
+                    ),
+                  ),
+                SizedBox(height: 10),
+                if (team.strDescriptionEN != null)
+                  Semantics(
+                    label: "Team Description",
+                    child: Text(
+                      team.strDescriptionEN!,
+                      softWrap: true,
+                    ),
+                  ),
+              ],
+            ),
           ),
         ),
       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/semantics.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:sportsphere/providers/team_provider.dart';
@@ -17,6 +18,7 @@ void main() async {
         appId: "1:470275251620:web:3c9cd7bdd3e6bce592b531",
         measurementId: "G-0BLW2HVKVF"),
   );
+  SemanticsBinding.instance.ensureSemantics();
   runApp(
     MultiProvider(
       providers: [

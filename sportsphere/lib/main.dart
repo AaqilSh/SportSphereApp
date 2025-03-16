@@ -3,6 +3,7 @@ import 'package:flutter/semantics.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:sportsphere/providers/team_provider.dart';
+import 'package:sportsphere/screens/theme.dart';
 import 'screens/login_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -40,24 +41,7 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'SportSphere',
-          theme: ThemeData(
-            textTheme: TextTheme(
-              bodyMedium: TextStyle(
-                fontSize: 16.sp,
-                height: 1.5,
-                fontFamily: 'Poppins',
-                fontWeight: FontWeight.normal,
-                color: Colors.black,
-              ),
-              titleLarge: TextStyle(
-                fontSize: 24.sp,
-                height: 29.sp / 24.sp,
-                fontFamily: 'Poppins',
-                fontWeight: FontWeight.w800,
-                color: Colors.black,
-              ),
-            ),
-          ),
+          theme: appTheme,
           home: const LoginScreen(),
         );
       },

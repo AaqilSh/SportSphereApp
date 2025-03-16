@@ -100,12 +100,11 @@ class _LeaguesScreenState extends State<LeaguesScreen> {
       appBar: AppBar(
         elevation: 0,
         title: Text(
+          textAlign: TextAlign.center,
           "Teams",
-          style: TextStyle(
-              fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black),
         ),
         automaticallyImplyLeading: false,
-        centerTitle: false,
+        centerTitle: true,
       ),
       body: isLoading
           ? Center(

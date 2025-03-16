@@ -28,7 +28,7 @@ final ThemeData appTheme = ThemeData(
     ),
   ),
   appBarTheme: AppBarTheme(
-    backgroundColor: Color(0xFF064C93),
+    backgroundColor: Color(0xFFA8DADC),
     foregroundColor: Colors.white,
   ),
 );

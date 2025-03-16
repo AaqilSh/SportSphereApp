@@ -5,6 +5,8 @@ import 'package:http/http.dart' as http;
 import 'team_info_screen.dart';
 
 class LeaguesScreen extends StatefulWidget {
+  const LeaguesScreen({super.key});
+
   @override
   _LeaguesScreenState createState() => _LeaguesScreenState();
 }
@@ -95,11 +97,7 @@ class _LeaguesScreenState extends State<LeaguesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[200], // Light grey background
-
-      // backgroundColor: Color(0xFFF8F9FC),
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
         elevation: 0,
         title: Text(
           "Teams",

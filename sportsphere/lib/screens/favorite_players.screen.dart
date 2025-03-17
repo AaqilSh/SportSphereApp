@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class FavoritePlayersScreen extends StatefulWidget {
+  const FavoritePlayersScreen({super.key});
+
   @override
   _FavoritePlayersScreenState createState() => _FavoritePlayersScreenState();
 }

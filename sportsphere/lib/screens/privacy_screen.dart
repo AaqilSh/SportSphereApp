@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class PrivacySettingsScreen extends StatefulWidget {
+  const PrivacySettingsScreen({super.key});
+
   @override
   _PrivacySettingsScreenState createState() => _PrivacySettingsScreenState();
 }

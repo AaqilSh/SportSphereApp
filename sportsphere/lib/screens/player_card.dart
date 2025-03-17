@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class PlayerCard extends StatefulWidget {
   final Map<String, dynamic> player;
 
-  PlayerCard({required this.player});
+  const PlayerCard({super.key, required this.player});
 
   @override
   _PlayerCardState createState() => _PlayerCardState();

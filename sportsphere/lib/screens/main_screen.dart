@@ -7,6 +7,8 @@ import 'schedule_screen.dart';
 import 'player_screen.dart';
 
 class MainScreen extends StatefulWidget {
+  const MainScreen({super.key});
+
   @override
   _MainScreenState createState() => _MainScreenState();
 }

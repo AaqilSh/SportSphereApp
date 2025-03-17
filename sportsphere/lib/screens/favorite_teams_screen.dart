@@ -3,6 +3,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
 class FavoriteTeamsScreen extends StatefulWidget {
+  const FavoriteTeamsScreen({super.key});
+
   @override
   _FavoriteTeamsScreenState createState() => _FavoriteTeamsScreenState();
 }

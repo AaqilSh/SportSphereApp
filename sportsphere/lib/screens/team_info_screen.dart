@@ -5,8 +5,7 @@ import 'package:http/http.dart' as http;
 class TeamInfoScreen extends StatefulWidget {
   final int leagueId;
   final int teamId;
-  const TeamInfoScreen({required this.leagueId, required this.teamId, Key? key})
-      : super(key: key);
+  const TeamInfoScreen({required this.leagueId, required this.teamId, super.key});
 
   @override
   _TeamInfoScreenState createState() => _TeamInfoScreenState();

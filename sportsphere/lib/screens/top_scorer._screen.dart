@@ -5,6 +5,8 @@ import 'dart:convert';
 import 'package:sportsphere/screens/player_card.dart';
 
 class TopScorersScreen extends StatefulWidget {
+  const TopScorersScreen({super.key});
+
   @override
   _TopScorersScreenState createState() => _TopScorersScreenState();
 }
@@ -84,7 +86,7 @@ class _TopScorersScreenState extends State<TopScorersScreen> {
                     if (topScorers.containsKey(leagueId))
                       ...topScorers[leagueId]!
                           .map((player) => PlayerCard(player: player))
-                          .toList(),
+                          ,
                     Divider(),
                   ],
                 );

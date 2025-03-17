@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:sportsphere/providers/team_provider.dart';
 
 class SearchScreen extends StatelessWidget {
+  const SearchScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,7 +68,7 @@ class SearchScreen extends StatelessWidget {
 class TeamDetailsScreen extends StatelessWidget {
   final Team team;
 
-  TeamDetailsScreen({required this.team});
+  const TeamDetailsScreen({super.key, required this.team});
 
   @override
   Widget build(BuildContext context) {
@@ -88,39 +90,35 @@ class TeamDetailsScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 8),
-                if (team.strStadium != null)
-                  Semantics(
-                    label: "Stadium: ${team.strStadium}",
-                    child: Text('Stadium: ${team.strStadium}'),
-                  ),
-                if (team.strKeywords != null)
-                  Semantics(
-                    label: "Keywords: ${team.strKeywords}",
-                    child: Text('Keywords: ${team.strKeywords}'),
-                  ),
-                if (team.strWebsite != null)
-                  Semantics(
-                    label: "Visit the official website of ${team.strTeam}",
-                    button: true, // Indicates it's a tappable element
-                    child: InkWell(
-                      onTap: () {
-                        // Add actual website link handling
-                      },
-                      child: Text(
-                        'Website: ${team.strWebsite}',
-                        style: TextStyle(color: Colors.blue),
-                      ),
-                    ),
-                  ),
-                SizedBox(height: 10),
-                if (team.strDescriptionEN != null)
-                  Semantics(
-                    label: "Team Description",
+                Semantics(
+                  label: "Stadium: ${team.strStadium}",
+                  child: Text('Stadium: ${team.strStadium}'),
+                ),
+                Semantics(
+                  label: "Keywords: ${team.strKeywords}",
+                  child: Text('Keywords: ${team.strKeywords}'),
+                ),
+                Semantics(
+                  label: "Visit the official website of ${team.strTeam}",
+                  button: true, // Indicates it's a tappable element
+                  child: InkWell(
+                    onTap: () {
+                      // Add actual website link handling
+                    },
                     child: Text(
-                      team.strDescriptionEN!,
-                      softWrap: true,
+                      'Website: ${team.strWebsite}',
+                      style: TextStyle(color: Colors.blue),
                     ),
                   ),
+                ),
+                SizedBox(height: 10),
+                Semantics(
+                  label: "Team Description",
+                  child: Text(
+                    team.strDescriptionEN!,
+                    softWrap: true,
+                  ),
+                ),
               ],
             ),
           ),

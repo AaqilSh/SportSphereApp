@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sportsphere/screens/accesibility_screen.dart';
 import 'package:sportsphere/screens/app_info_screen.dart';
@@ -8,6 +9,8 @@ import 'package:sportsphere/screens/notification_screen.dart';
 import 'package:sportsphere/screens/privacy_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
+  const ProfileScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,8 +52,16 @@ class ProfileScreen extends StatelessWidget {
             Spacer(),
             Center(
               child: TextButton(
-                onPressed: () {
-                  // Implement logout function
+                onPressed: () async {
+                  try {
+                    await FirebaseAuth.instance.signOut();
+                    Navigator.pushReplacementNamed(
+                        context, '/login'); // Redirect to login screen
+                  } catch (e) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("Logout failed: $e")),
+                    );
+                  }
                 },
                 child: Text("Logout",
                     style: TextStyle(color: Colors.red, fontSize: 16)),

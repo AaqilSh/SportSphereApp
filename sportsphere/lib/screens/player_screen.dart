@@ -6,6 +6,8 @@ import 'package:sportsphere/screens/top_assist_screen.dart';
 import 'package:sportsphere/screens/top_scorer._screen.dart';
 
 class PlayersScreen extends StatelessWidget {
+  const PlayersScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

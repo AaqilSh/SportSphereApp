@@ -4,6 +4,8 @@ import 'dart:convert';
 import 'package:intl/intl.dart';
 
 class ScheduleScreen extends StatefulWidget {
+  const ScheduleScreen({super.key});
+
   @override
   _ScheduleScreenState createState() => _ScheduleScreenState();
 }
@@ -100,7 +102,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
 class FixtureCard extends StatelessWidget {
   final String team1, team1Logo, team2, team2Logo, time, round, venue;
 
-  FixtureCard({
+  const FixtureCard({super.key, 
     required this.team1,
     required this.team1Logo,
     required this.team2,

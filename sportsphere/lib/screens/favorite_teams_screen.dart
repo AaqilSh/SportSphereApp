@@ -29,6 +29,14 @@ class _FavoriteTeamsScreenState extends State<FavoriteTeamsScreen> {
     }
   }
 
+  Future<void> _removeFromFavorites(Map<String, dynamic> team) async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      favoriteTeams.removeWhere((favTeam) => favTeam["id"] == team["id"]);
+    });
+    await prefs.setString('favorite_teams', json.encode(favoriteTeams));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,6 +50,10 @@ class _FavoriteTeamsScreenState extends State<FavoriteTeamsScreen> {
                 return ListTile(
                   leading: Image.network(team["logo"], width: 40, height: 40),
                   title: Text(team["name"]),
+                  trailing: IconButton(
+                    icon: Icon(Icons.delete, color: Colors.red),
+                    onPressed: () => _removeFromFavorites(team),
+                  ),
                 );
               },
             ),

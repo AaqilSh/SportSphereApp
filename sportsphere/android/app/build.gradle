@@ -4,6 +4,13 @@ plugins {
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id "dev.flutter.flutter-gradle-plugin"
 }
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+def flutterMinSdkVersion = localProperties.getProperty('flutter.flutterMinSdkVersion', '23').toInteger()
+def flutterTargetSdkVersion = localProperties.getProperty('flutter.flutterTargetSdkVersion', '33').toInteger()
+def flutterCompileSdkVersion = localProperties.getProperty('flutter.compileSdkVersion', '33').toInteger()
+def flutterVersionCode = localProperties.getProperty('flutter.versionCode', '1').toInteger()
+def flutterVersionName = localProperties.getProperty('flutter.versionName', '1.0')
 
 android {
     namespace = "com.example.sportsphere"
@@ -24,10 +31,10 @@ android {
         applicationId = "com.example.sportsphere"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = flutter.minSdkVersion
-        targetSdk = flutter.targetSdkVersion
-        versionCode = flutter.versionCode
-        versionName = flutter.versionName
+        minSdkVersion flutterMinSdkVersion.toInteger()
+        targetSdkVersion flutterTargetSdkVersion.toInteger()
+        versionCode flutterVersionCode.toInteger()
+        versionName flutterVersionName
     }
 
     buildTypes {

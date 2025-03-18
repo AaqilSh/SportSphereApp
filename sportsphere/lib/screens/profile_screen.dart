@@ -5,6 +5,7 @@ import 'package:sportsphere/screens/app_info_screen.dart';
 import 'package:sportsphere/screens/customer_support_screen.dart';
 import 'package:sportsphere/screens/favorite_players.screen.dart';
 import 'package:sportsphere/screens/favorite_teams_screen.dart';
+import 'package:sportsphere/screens/login_screen.dart';
 import 'package:sportsphere/screens/notification_screen.dart';
 import 'package:sportsphere/screens/privacy_screen.dart';
 
@@ -55,8 +56,8 @@ class ProfileScreen extends StatelessWidget {
                 onPressed: () async {
                   try {
                     await FirebaseAuth.instance.signOut();
-                    Navigator.pushReplacementNamed(
-                        context, '/login'); // Redirect to login screen
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => LoginScreen()));
                   } catch (e) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(content: Text("Logout failed: $e")),

@@ -24,6 +24,14 @@ class _FavoritePlayersScreenState extends State<FavoritePlayersScreen> {
     });
   }
 
+  Future<void> _removeFromFavorites(String player) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      favoritePlayers.remove(player);
+    });
+    await prefs.setStringList('favoritePlayers', favoritePlayers);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,6 +49,11 @@ class _FavoritePlayersScreenState extends State<FavoritePlayersScreen> {
                     title: Text(
                       favoritePlayers[index],
                       style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    trailing: IconButton(
+                      icon: Icon(Icons.delete, color: Colors.red),
+                      onPressed: () =>
+                          _removeFromFavorites(favoritePlayers[index]),
                     ),
                   ),
                 );

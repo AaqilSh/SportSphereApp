@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:sportsphere/screens/forgot_password_screen.dart';
 import 'package:sportsphere/screens/main_screen.dart';
 import 'package:sportsphere/screens/sign_up_screen.dart';
 
@@ -116,7 +117,11 @@ class _LoginScreenState extends State<LoginScreen> {
               alignment: Alignment.centerRight,
               child: TextButton(
                 onPressed: () {
-                  // TODO: Implement forgot password
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ForgotPasswordScreen()),
+                  );
                 },
                 child: const Text('Forgot Password?'),
               ),

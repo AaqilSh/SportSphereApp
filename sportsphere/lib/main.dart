@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:sportsphere/providers/font_size_provider.dart';
 import 'package:sportsphere/providers/team_provider.dart';
 import 'package:sportsphere/screens/theme.dart';
 import 'screens/login_screen.dart';
@@ -9,6 +10,8 @@ import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  final fontSizeProvider = FontSizeProvider();
+  await fontSizeProvider.loadFontSize();
   await Firebase.initializeApp(
     options: FirebaseOptions(
         apiKey: "AIzaSyCA98Zn2h10tpgzo7nQxwGORnoP0JL8e18",
@@ -23,6 +26,7 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (context) => fontSizeProvider),
         ChangeNotifierProvider(create: (context) => TeamProvider()),
       ],
       child: const MyApp(),

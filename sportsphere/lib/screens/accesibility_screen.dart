@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sportsphere/providers/font_size_provider.dart';
 
 class AccessibilityScreen extends StatelessWidget {
   const AccessibilityScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    var fontSizeProvider = Provider.of<FontSizeProvider>(context);
+
+    double fontSize = Provider.of<FontSizeProvider>(context).fontSize;
     return Scaffold(
       appBar: AppBar(title: Text('Accessibility')),
       body: Padding(
@@ -14,7 +19,7 @@ class AccessibilityScreen extends StatelessWidget {
           children: [
             Text(
               'Accessibility Settings',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 20),
             SwitchListTile(
@@ -33,8 +38,10 @@ class AccessibilityScreen extends StatelessWidget {
             ),
             SwitchListTile(
               title: Text('Increase Text Size'),
-              value: false,
+              value: fontSize > 16.0,
               onChanged: (bool value) {
+                fontSizeProvider.setFontSize(value ? 20.0 : 16.0);
+
                 // Handle toggle
               },
             ),

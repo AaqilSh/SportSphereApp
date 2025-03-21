@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sportsphere/providers/contrast_provider.dart';
 import 'package:sportsphere/providers/font_size_provider.dart';
 
 class AccessibilityScreen extends StatelessWidget {
@@ -8,6 +9,7 @@ class AccessibilityScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var fontSizeProvider = Provider.of<FontSizeProvider>(context);
+    var contrastProvider = Provider.of<ContrastProvider>(context);
 
     double fontSize = Provider.of<FontSizeProvider>(context).fontSize;
     return Scaffold(
@@ -24,9 +26,9 @@ class AccessibilityScreen extends StatelessWidget {
             SizedBox(height: 20),
             SwitchListTile(
               title: Text('Enable High Contrast Mode'),
-              value: false,
+              value: contrastProvider.isHighContrast,
               onChanged: (bool value) {
-                // Handle toggle
+                contrastProvider.toggleContrast();
               },
             ),
             SwitchListTile(

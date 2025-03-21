@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:sportsphere/providers/contrast_provider.dart';
 import 'package:sportsphere/screens/p_new.dart';
 import 'package:sportsphere/screens/profile_screen.dart';
+import 'package:sportsphere/screens/standings.dart';
 import 'search_screen.dart';
 import 'teams_screen.dart';
 import 'schedule_screen.dart';
@@ -22,7 +25,8 @@ class _MainScreenState extends State<MainScreen> {
     SearchScreen(),
     ScheduleScreen(),
     // PlayersScreen(),
-    PlayersScreen(),
+    // PlayersScreen(),
+    StandingsPage(),
     ProfileScreen(),
   ];
 

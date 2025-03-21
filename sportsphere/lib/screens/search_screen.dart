@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sportsphere/providers/contrast_provider.dart';
 import 'package:sportsphere/providers/team_provider.dart';
 
 class SearchScreen extends StatelessWidget {
@@ -7,9 +8,14 @@ class SearchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isHighContrast = Provider.of<ContrastProvider>(context).isHighContrast;
+
     return Scaffold(
-      appBar:
-          AppBar(title: Text('Search Teams'), automaticallyImplyLeading: false),
+      appBar: AppBar(
+        title: Text('Search Teams'),
+        automaticallyImplyLeading: false,
+        backgroundColor: isHighContrast ? Colors.black : Colors.blue,
+      ),
       body: Column(
         children: [
           Padding(

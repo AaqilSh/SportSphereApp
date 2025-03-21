@@ -4,6 +4,7 @@ import 'package:sportsphere/providers/contrast_provider.dart';
 import 'package:sportsphere/providers/player_provider.dart';
 import 'package:sportsphere/providers/team_provider.dart';
 import 'package:sportsphere/providers/venue_provider.dart';
+import 'package:sportsphere/screens/player_detail.dart';
 import 'package:sportsphere/screens/team_detail_screen.dart';
 import 'package:sportsphere/screens/venue_detials_screen.dart';
 
@@ -26,7 +27,7 @@ class SearchScreen extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: TextField(
               decoration: InputDecoration(
-                labelText: 'Search Teams & Players',
+                labelText: 'Search Teams, Players & Venues',
                 border: OutlineInputBorder(),
               ),
               onChanged: (query) {
@@ -62,7 +63,9 @@ class SearchScreen extends StatelessWidget {
                           final team = teamProvider.teams[index];
                           return _buildListItem(
                             title: team.strTeam,
-                            subtitle: team.strLeague ?? '',
+                            subtitle: team.strLeague
+                                    .replaceFirst(RegExp(r'^_-'), '') ??
+                                '',
                             onTap: () {
                               Navigator.push(
                                 context,
@@ -82,13 +85,21 @@ class SearchScreen extends StatelessWidget {
                         itemBuilder: (context, index) {
                           final player = playerProvider.players[index];
                           return _buildListItem(
-                            title: player.strPlayer,
-                            subtitle:
-                                '${player.strTeam} - ${player.strPosition}',
-                            imageUrl: player.strThumb?.isNotEmpty == true
-                                ? player.strThumb
-                                : null,
-                          );
+                              title: player.strPlayer,
+                              subtitle:
+                                  '${player.strTeam} - ${player.strPosition}'
+                                      .replaceFirst(RegExp(r'^_'), ''),
+                              imageUrl: player.strThumb?.isNotEmpty == true
+                                  ? player.strThumb
+                                  : null,
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            PlayerDetailsScreen(
+                                                player: player)));
+                              });
                         },
                       ),
                     if (venueProvider.venues.isNotEmpty)
@@ -100,7 +111,8 @@ class SearchScreen extends StatelessWidget {
                           return _buildListItem(
                             title: venue.strVenue,
                             subtitle:
-                                '${venue.strLocation} - Capacity: ${venue.intCapacity}',
+                                '${venue.strLocation} - Capacity: ${venue.intCapacity}'
+                                    .replaceFirst(RegExp(r'^_'), ''),
                             imageUrl: venue.strThumb?.isNotEmpty == true
                                 ? venue.strThumb
                                 : null,

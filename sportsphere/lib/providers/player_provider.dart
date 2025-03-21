@@ -10,7 +10,8 @@ class Player {
   final String strPosition;
   final String strDescriptionEN;
   final String strThumb;
-
+  final String strCutout;
+  final String dateBorn;
   Player({
     required this.idPlayer,
     required this.strPlayer,
@@ -19,6 +20,8 @@ class Player {
     required this.strPosition,
     required this.strDescriptionEN,
     required this.strThumb,
+    required this.strCutout,
+    required this.dateBorn,
   });
 
   factory Player.fromJson(Map<String, dynamic> json) {
@@ -30,6 +33,8 @@ class Player {
       strPosition: json['strPosition'] ?? '',
       strDescriptionEN: json['strDescriptionEN'] ?? '',
       strThumb: json['strThumb'] ?? '',
+      strCutout: json['strCutout'] ?? '',
+      dateBorn: json['dateBorn'] ?? '',
     );
   }
 }

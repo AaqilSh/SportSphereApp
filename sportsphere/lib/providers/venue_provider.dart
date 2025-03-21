@@ -69,11 +69,12 @@ class VenueProvider with ChangeNotifier {
     notifyListeners();
 
     final url = Uri.parse(
-        'https://www.thesportsdb.com/api/v1/json/3/searchvenues.php?v=$query');
+        'https://www.thesportsdb.com/api/v1/json/3/searchvenues.php?t=$query');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
+      print(data['venues']);
       if (data['venues'] != null) {
         _venues = (data['venues'] as List)
             .map((venue) => Venue.fromJson(venue))

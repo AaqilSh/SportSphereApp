@@ -4,7 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:sportsphere/providers/contrast_provider.dart';
 import 'package:sportsphere/providers/font_size_provider.dart';
+import 'package:sportsphere/providers/player_provider.dart';
 import 'package:sportsphere/providers/team_provider.dart';
+import 'package:sportsphere/providers/venue_provider.dart';
 import 'package:sportsphere/screens/theme.dart';
 import 'screens/login_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -32,6 +34,8 @@ void main() async {
         ChangeNotifierProvider(create: (context) => fontSizeProvider),
         ChangeNotifierProvider(create: (context) => contrastProvider),
         ChangeNotifierProvider(create: (context) => TeamProvider()),
+        ChangeNotifierProvider(create: (context) => PlayerProvider()),
+        ChangeNotifierProvider(create: (context) => VenueProvider()),
       ],
       child: const MyApp(),
     ),

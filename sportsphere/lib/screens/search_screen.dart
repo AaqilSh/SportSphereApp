@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sportsphere/providers/contrast_provider.dart';
+import 'package:sportsphere/providers/player_provider.dart';
 import 'package:sportsphere/providers/team_provider.dart';
+import 'package:sportsphere/providers/venue_provider.dart';
+import 'package:sportsphere/screens/team_detail_screen.dart';
+import 'package:sportsphere/screens/venue_detials_screen.dart';
 
 class SearchScreen extends StatelessWidget {
   const SearchScreen({super.key});
@@ -12,7 +16,7 @@ class SearchScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Search Teams'),
+        title: Text('Search'),
         automaticallyImplyLeading: false,
         backgroundColor: isHighContrast ? Colors.black : Colors.blue,
       ),
@@ -22,43 +26,97 @@ class SearchScreen extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: TextField(
               decoration: InputDecoration(
-                labelText: 'Search Team',
+                labelText: 'Search Teams & Players',
                 border: OutlineInputBorder(),
               ),
               onChanged: (query) {
                 context.read<TeamProvider>().searchTeams(query);
+                context.read<PlayerProvider>().searchPlayers(query);
+                context.read<VenueProvider>().searchVenues(query);
               },
             ),
           ),
           Expanded(
-            child: Consumer<TeamProvider>(
-              builder: (context, provider, child) {
-                if (provider.isLoading) {
+            child: Consumer3<TeamProvider, PlayerProvider, VenueProvider>(
+              builder: (context, teamProvider, playerProvider, venueProvider,
+                  child) {
+                if (teamProvider.isLoading &&
+                    playerProvider.isLoading &&
+                    venueProvider.isLoading) {
                   return Center(child: CircularProgressIndicator());
                 }
-                if (provider.teams.isEmpty) {
+
+                if (teamProvider.teams.isEmpty &&
+                    playerProvider.players.isEmpty &&
+                    venueProvider.venues.isEmpty) {
                   return Center(child: Text('No results found'));
                 }
-                return ListView.builder(
-                  itemCount: provider.teams.length,
-                  itemBuilder: (context, index) {
-                    final team = provider.teams[index];
-                    return Card(
-                      child: ListTile(
-                        title: Text(team.strTeam),
-                        subtitle: Text(team.strLeague ?? ''),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  TeamDetailsScreen(team: team),
-                            ),
+
+                return ListView(
+                  children: [
+                    if (teamProvider.teams.isNotEmpty)
+                      _buildSection(
+                        title: 'Teams',
+                        itemCount: teamProvider.teams.length,
+                        itemBuilder: (context, index) {
+                          final team = teamProvider.teams[index];
+                          return _buildListItem(
+                            title: team.strTeam,
+                            subtitle: team.strLeague ?? '',
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      TeamDetailsScreen(team: team),
+                                ),
+                              );
+                            },
                           );
                         },
                       ),
-                    );
-                  },
+                    if (playerProvider.players.isNotEmpty)
+                      _buildSection(
+                        title: 'Players',
+                        itemCount: playerProvider.players.length,
+                        itemBuilder: (context, index) {
+                          final player = playerProvider.players[index];
+                          return _buildListItem(
+                            title: player.strPlayer,
+                            subtitle:
+                                '${player.strTeam} - ${player.strPosition}',
+                            imageUrl: player.strThumb?.isNotEmpty == true
+                                ? player.strThumb
+                                : null,
+                          );
+                        },
+                      ),
+                    if (venueProvider.venues.isNotEmpty)
+                      _buildSection(
+                        title: 'Venues',
+                        itemCount: venueProvider.venues.length,
+                        itemBuilder: (context, index) {
+                          final venue = venueProvider.venues[index];
+                          return _buildListItem(
+                            title: venue.strVenue,
+                            subtitle:
+                                '${venue.strLocation} - Capacity: ${venue.intCapacity}',
+                            imageUrl: venue.strThumb?.isNotEmpty == true
+                                ? venue.strThumb
+                                : null,
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      VenueDetailsScreen(venue: venue),
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      ),
+                  ],
                 );
               },
             ),
@@ -67,69 +125,47 @@ class SearchScreen extends StatelessWidget {
       ),
     );
   }
-}
 
-// TeamDetailsScreen
-
-class TeamDetailsScreen extends StatelessWidget {
-  final Team team;
-
-  const TeamDetailsScreen({super.key, required this.team});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(team.strTeam)),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Semantics(
-            label: "Team details screen for ${team.strTeam}",
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Semantics(
-                  label: "League: ${team.strLeague}",
-                  child: Text(
-                    'League: ${team.strLeague}',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                ),
-                SizedBox(height: 8),
-                Semantics(
-                  label: "Stadium: ${team.strStadium}",
-                  child: Text('Stadium: ${team.strStadium}'),
-                ),
-                Semantics(
-                  label: "Keywords: ${team.strKeywords}",
-                  child: Text('Keywords: ${team.strKeywords}'),
-                ),
-                Semantics(
-                  label: "Visit the official website of ${team.strTeam}",
-                  button: true, // Indicates it's a tappable element
-                  child: InkWell(
-                    onTap: () {
-                      // Add actual website link handling
-                    },
-                    child: Text(
-                      'Website: ${team.strWebsite}',
-                      style: TextStyle(color: Colors.blue),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 10),
-                Semantics(
-                  label: "Team Description",
-                  child: Text(
-                    team.strDescriptionEN!,
-                    softWrap: true,
-                  ),
-                ),
-              ],
-            ),
-          ),
+  Widget _buildSection({
+    required String title,
+    required int itemCount,
+    required Widget Function(BuildContext, int) itemBuilder,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Text(title,
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
         ),
+        ListView.builder(
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          itemCount: itemCount,
+          itemBuilder: itemBuilder,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildListItem({
+    required String title,
+    required String subtitle,
+    String? imageUrl,
+    VoidCallback? onTap,
+  }) {
+    return Card(
+      child: ListTile(
+        title: Text(title),
+        subtitle: Text(subtitle),
+        leading: imageUrl != null
+            ? Image.network(imageUrl, width: 50, height: 50, fit: BoxFit.cover)
+            : null,
+        onTap: onTap,
       ),
     );
   }
 }
+
+// TeamDetailsScreen

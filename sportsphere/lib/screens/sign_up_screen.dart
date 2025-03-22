@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:sportsphere/screens/login_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -19,8 +20,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
     String password = passwordController.text.trim();
 
     if (email.isEmpty || password.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Email and Password cannot be empty!")),
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text("Input Error"),
+          content: Text("Email and Password cannot be empty!"),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text("OK"),
+            ),
+          ],
+        ),
       );
       return;
     }
@@ -31,14 +42,35 @@ class _SignUpScreenState extends State<SignUpScreen> {
         email: email,
         password: password,
       );
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-            content: Text(
-                "Signup successful! Welcome ${userCredential.user!.email}")),
+
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text("SUCCESS"),
+          content: Text(
+              "Thanks for signing up! \n Welcome ${userCredential.user!.email} \n Please Login to continue"),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => LoginScreen())),
+              child: Text("OK"),
+            ),
+          ],
+        ),
       );
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Signup error: $e")),
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text("Signup Error"),
+          content: Text("Error: $e"),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text("OK"),
+            ),
+          ],
+        ),
       );
     }
   }
@@ -58,7 +90,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 50),
@@ -107,7 +138,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   Text("Have an account? ", style: TextStyle(fontSize: 14)),
                   GestureDetector(
                     onTap: () {
-                      // TODO: Navigate to Login
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginScreen()),
+                      );
                     },
                     child: Text(
                       "Login",

@@ -85,7 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
               scale: .2,
               opacity: const AlwaysStoppedAnimation(.8),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             Text(
               'Welcome!',
               style: TextStyle(
@@ -151,7 +151,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 },
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 12),
-                  backgroundColor: const Color(0xff8875ea),
+                  backgroundColor: Color(0xFF3D348B),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
@@ -160,7 +160,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ? const CircularProgressIndicator(color: Colors.white)
                     : const Text(
                         'Login',
-                        style: TextStyle(fontSize: 16, color: Colors.white),
+                        style: TextStyle(fontSize: 18, color: Colors.white),
                       ),
               ),
             ),
@@ -177,7 +177,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: const Text(
                     'Sign up',
                     style: TextStyle(
-                        color: Colors.blue, fontWeight: FontWeight.bold),
+                        color: Color(0xFF3D348B), fontWeight: FontWeight.bold),
                   ),
                 ),
               ],

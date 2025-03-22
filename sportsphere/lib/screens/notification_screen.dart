@@ -13,6 +13,9 @@ class NotificationSettingsScreen extends StatefulWidget {
 class _NotificationSettingsScreenState
     extends State<NotificationSettingsScreen> {
   bool _notificationsEnabled = false;
+  bool _notifyFixtures = false;
+  bool _notifyTeams = false;
+  bool _notifyPlayers = false;
   final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
@@ -55,6 +58,14 @@ class _NotificationSettingsScreenState
     }
   }
 
+  Widget _buildSwitchTile(String title, bool value, Function(bool) onChanged) {
+    return SwitchListTile(
+      title: Text(title, style: TextStyle(fontSize: 18.0)),
+      value: value,
+      onChanged: _notificationsEnabled ? onChanged : null,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,6 +83,24 @@ class _NotificationSettingsScreenState
               _toggleNotifications(value);
             },
           ),
+          Divider(),
+          _buildSwitchTile('Notify About Fixtures', _notifyFixtures, (value) {
+            setState(() {
+              _notifyFixtures = value;
+            });
+          }),
+          _buildSwitchTile('Notify About Favorite Teams', _notifyTeams,
+              (value) {
+            setState(() {
+              _notifyTeams = value;
+            });
+          }),
+          _buildSwitchTile('Notify About Favorite Players', _notifyPlayers,
+              (value) {
+            setState(() {
+              _notifyPlayers = value;
+            });
+          }),
         ],
       ),
     );

@@ -85,8 +85,7 @@ class _TopScorersScreenState extends State<TopScorersScreen> {
                     ),
                     if (topScorers.containsKey(leagueId))
                       ...topScorers[leagueId]!
-                          .map((player) => PlayerCard(player: player))
-                          ,
+                          .map((player) => PlayerCard(player: player)),
                     Divider(),
                   ],
                 );

@@ -70,6 +70,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Premier League Fixtures"),
+        centerTitle: true,
         automaticallyImplyLeading: false,
       ),
       body: isLoading
@@ -102,7 +103,8 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
 class FixtureCard extends StatelessWidget {
   final String team1, team1Logo, team2, team2Logo, time, round, venue;
 
-  const FixtureCard({super.key, 
+  const FixtureCard({
+    super.key,
     required this.team1,
     required this.team1Logo,
     required this.team2,
@@ -115,6 +117,7 @@ class FixtureCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: Color(0xffDAF0F2),
       margin: EdgeInsets.symmetric(vertical: 10),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Padding(

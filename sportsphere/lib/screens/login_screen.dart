@@ -71,16 +71,28 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffF1FAEE),
+      backgroundColor: Color(0xffDAE4F2),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Image.asset('assets/images/logo.png', height: 80),
+            Image.asset(
+              'assets/images/logo.png',
+              // height: 100,
+              semanticLabel: 'Logo',
+              scale: .2,
+              opacity: const AlwaysStoppedAnimation(.8),
+            ),
             const SizedBox(height: 20),
-            Text('Welcome!', style: Theme.of(context).textTheme.titleLarge),
+            Text(
+              'Welcome!',
+              style: TextStyle(
+                  color: Color(0xff3B407D),
+                  fontSize: 26.0,
+                  fontWeight: FontWeight.bold),
+            ),
             const SizedBox(height: 10),
             Text('Please login to continue using our app',
                 style: Theme.of(context).textTheme.bodyMedium),
@@ -139,7 +151,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 },
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 12),
-                  backgroundColor: const Color.fromARGB(255, 6, 80, 141),
+                  backgroundColor: const Color(0xff8875ea),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),

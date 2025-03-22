@@ -89,6 +89,7 @@ class _LeaguesScreenState extends State<LeaguesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // backgroundColor: Color(0xffDAE4F2),
       appBar: AppBar(title: const Text("Teams"), centerTitle: true),
       body: isLoading
           ? Center(child: CircularProgressIndicator())
@@ -143,6 +144,7 @@ class _LeaguesScreenState extends State<LeaguesScreen> {
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         elevation: 3,
+        color: Color(0xffDAF0F2),
         child: Padding(
           padding: const EdgeInsets.all(8),
           child: Column(

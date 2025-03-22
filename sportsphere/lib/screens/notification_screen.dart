@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class NotificationSettingsScreen extends StatefulWidget {
   const NotificationSettingsScreen({super.key});
@@ -22,21 +23,35 @@ class _NotificationSettingsScreenState
   }
 
   Future<void> _checkNotificationPermission() async {
-    var result = await _flutterLocalNotificationsPlugin
-        .resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>()
-        ?.areNotificationsEnabled();
+    var androidImplementation =
+        _flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>();
+    var enabled = await androidImplementation?.areNotificationsEnabled();
     setState(() {
-      _notificationsEnabled = result ?? false;
+      _notificationsEnabled = enabled ?? false;
     });
   }
 
+  Future<void> _requestNotificationPermission() async {
+    PermissionStatus status = await Permission.notification.request();
+    if (status.isGranted) {
+      setState(() {
+        _notificationsEnabled = true;
+      });
+    } else {
+      setState(() {
+        _notificationsEnabled = false;
+      });
+    }
+  }
+
   Future<void> _toggleNotifications(bool enabled) async {
-    setState(() {
-      _notificationsEnabled = enabled;
-    });
     if (enabled) {
-      // Request permission logic can be added here
+      await _requestNotificationPermission();
+    } else {
+      setState(() {
+        _notificationsEnabled = false;
+      });
     }
   }
 
@@ -44,19 +59,20 @@ class _NotificationSettingsScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Notification Settings')),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Text('Enable Notifications'),
-            Switch(
-              value: _notificationsEnabled,
-              onChanged: (bool value) {
-                _toggleNotifications(value);
-              },
+      body: ListView(
+        padding: EdgeInsets.all(16.0),
+        children: [
+          SwitchListTile(
+            title: Text(
+              'Enable Notifications',
+              style: TextStyle(fontSize: 18.0),
             ),
-          ],
-        ),
+            value: _notificationsEnabled,
+            onChanged: (bool value) {
+              _toggleNotifications(value);
+            },
+          ),
+        ],
       ),
     );
   }

@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:sportsphere/screens/player_card.dart';
 import 'package:sportsphere/screens/top_assist_screen.dart';
-import 'package:sportsphere/screens/top_scorer._screen.dart';
+import 'package:sportsphere/screens/top_scorer_screen.dart';
 
 class PlayersScreen extends StatelessWidget {
   const PlayersScreen({super.key});

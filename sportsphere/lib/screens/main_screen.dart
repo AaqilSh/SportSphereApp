@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
-import 'package:sportsphere/providers/contrast_provider.dart';
 import 'package:sportsphere/screens/p_new.dart';
 import 'package:sportsphere/screens/profile_screen.dart';
+import 'package:sportsphere/screens/standing_home.dart';
 import 'package:sportsphere/screens/standings.dart';
 import 'search_screen.dart';
 import 'teams_screen.dart';
@@ -24,9 +23,9 @@ class _MainScreenState extends State<MainScreen> {
     LeaguesScreen(),
     SearchScreen(),
     ScheduleScreen(),
-    // PlayersScreen(),
-    // PlayersScreen(),
-    StandingsPage(),
+    PlayersScreen(),
+    StandingsScreen(),
+    // StandingsPage(),
     ProfileScreen(),
   ];
 
@@ -39,13 +38,13 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _screens[_selectedIndex], // Show selected screen
+      body: _screens[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
-        type: BottomNavigationBarType.fixed, // Ensures labels always show
+        type: BottomNavigationBarType.fixed,
         selectedItemColor: Colors.blue,
-        unselectedItemColor: Colors.grey, // Default icon color
+        unselectedItemColor: Colors.grey,
         iconSize: 25.0,
         items: [
           BottomNavigationBarItem(
@@ -56,6 +55,8 @@ class _MainScreenState extends State<MainScreen> {
               icon: FaIcon(FontAwesomeIcons.calendarDays), label: "Schedule"),
           BottomNavigationBarItem(
               icon: FaIcon(FontAwesomeIcons.peopleGroup), label: "Players"),
+          BottomNavigationBarItem(
+              icon: FaIcon(FontAwesomeIcons.peopleGroup), label: "Standings"),
           BottomNavigationBarItem(
               icon: FaIcon(FontAwesomeIcons.user), label: "Profile"),
         ],

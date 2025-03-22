@@ -8,6 +8,9 @@ class PlayerDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String teamName =
+        player.strTeam == "_Retired Soccer" ? "Retired Player" : player.strTeam;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(player.strPlayer),
@@ -15,35 +18,41 @@ class PlayerDetailsScreen extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            if (player.strCutout.isNotEmpty)
-              CircleAvatar(
-                radius: 60,
-                backgroundImage: NetworkImage(player.strCutout),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              if (player.strCutout.isNotEmpty)
+                CircleAvatar(
+                  radius: 60,
+                  backgroundImage: NetworkImage(player.strCutout),
+                ),
+              SizedBox(height: 16),
+              Text(
+                player.strPlayer,
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
-            SizedBox(height: 16),
-            Text(
-              player.strPlayer,
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 8),
-            Text(
-              player.strTeam,
-              style: TextStyle(fontSize: 18, fontStyle: FontStyle.italic),
-            ),
-            SizedBox(height: 8),
-            Text(
-              '${player.strPosition} - ${player.strNationality}',
-              style: TextStyle(fontSize: 16),
-            ),
-            SizedBox(height: 8),
-            Text(
-              'Born: ${player.dateBorn}',
-              style: TextStyle(fontSize: 16),
-            ),
-          ],
+              SizedBox(height: 8),
+              Text(
+                teamName,
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                    fontStyle: FontStyle.italic),
+              ),
+              SizedBox(height: 8),
+              Text(
+                '${player.strPosition} - ${player.strNationality}',
+                style: TextStyle(fontSize: 16),
+              ),
+              SizedBox(height: 8),
+              Text(
+                'Born: ${player.dateBorn}',
+                style: TextStyle(fontSize: 16),
+              ),
+            ],
+          ),
         ),
       ),
     );

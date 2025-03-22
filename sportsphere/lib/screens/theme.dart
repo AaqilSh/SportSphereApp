@@ -3,7 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 final ThemeData appTheme = ThemeData(
   primaryColor: Color(0xFF064C93), // Deep Blue
-  scaffoldBackgroundColor: Color(0xFFF5F7FA), // Light Grayish White
+  scaffoldBackgroundColor: Color(0xffDAE4F2),
+  // Light Grayish White
   cardColor: Colors.white, // Cards
   textTheme: TextTheme(
     bodyMedium: TextStyle(
@@ -28,7 +29,7 @@ final ThemeData appTheme = ThemeData(
     ),
   ),
   appBarTheme: AppBarTheme(
-    backgroundColor: Color(0xFFA8DADC),
-    foregroundColor: Colors.white,
+    backgroundColor: Color(0xff80CBC4),
+    // foregroundColor: Color(0xffF2E8DA),
   ),
 );

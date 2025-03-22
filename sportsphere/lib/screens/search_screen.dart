@@ -18,8 +18,9 @@ class SearchScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Search'),
+        centerTitle: true,
         automaticallyImplyLeading: false,
-        backgroundColor: isHighContrast ? Colors.black : Colors.blue,
+        // backgroundColor: isHighContrast ? Colors.black:Color('')
       ),
       body: Column(
         children: [
@@ -168,6 +169,7 @@ class SearchScreen extends StatelessWidget {
     VoidCallback? onTap,
   }) {
     return Card(
+      color: Color(0xffDAF0F2),
       child: ListTile(
         title: Text(title),
         subtitle: Text(subtitle),

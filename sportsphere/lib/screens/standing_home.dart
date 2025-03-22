@@ -1,14 +1,62 @@
 import 'dart:convert';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/material.dart';
 
-class StandingsPage extends StatefulWidget {
+class StandingsScreen extends StatelessWidget {
+  final List<Map<String, String>> leagues = [
+    {"idLeague": "39", "strLeague": "Premier League"},
+    {"idLeague": "4331", "strLeague": "La Liga"},
+    {"idLeague": "4335", "strLeague": "Bundesliga"},
+    {"idLeague": "4334", "strLeague": "Serie A"},
+    {"idLeague": "4332", "strLeague": "Ligue 1"},
+  ];
+
   @override
-  _StandingsPageState createState() => _StandingsPageState();
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Standings')),
+      body: ListView.builder(
+        itemCount: leagues.length,
+        itemBuilder: (context, index) {
+          return Card(
+            child: ListTile(
+              title: Text(leagues[index]['strLeague']!),
+              trailing: Icon(Icons.arrow_forward_ios),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => LeagueStandingsScreen(
+                      leagueId: leagues[index]['idLeague']!,
+                      leagueName: leagues[index]['strLeague']!,
+                    ),
+                  ),
+                );
+              },
+            ),
+          );
+        },
+      ),
+    );
+  }
 }
 
-class _StandingsPageState extends State<StandingsPage> {
+class LeagueStandingsScreen extends StatefulWidget {
+  final String leagueId;
+  final String leagueName;
+
+  const LeagueStandingsScreen({
+    super.key,
+    required this.leagueId,
+    required this.leagueName,
+  });
+
+  @override
+  _LeagueStandingsScreenState createState() => _LeagueStandingsScreenState();
+}
+
+class _LeagueStandingsScreenState extends State<LeagueStandingsScreen> {
   List<dynamic> standings = [];
   bool isLoading = true;
   bool hasError = false;
@@ -20,8 +68,8 @@ class _StandingsPageState extends State<StandingsPage> {
   }
 
   Future<void> fetchStandings() async {
-    const String apiUrl =
-        "https://v3.football.api-sports.io/standings?league=39&season=2022";
+    final String apiUrl =
+        "https://v3.football.api-sports.io/standings?league=${widget.leagueId}&season=2022";
     const Map<String, String> headers = {
       "x-rapidapi-host": "v3.football.api-sports.io",
       "x-rapidapi-key": "a0ae70bf7c6687247992d15ddff92bfb"
@@ -31,7 +79,6 @@ class _StandingsPageState extends State<StandingsPage> {
       final response = await http.get(Uri.parse(apiUrl), headers: headers);
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
-        print(response.body);
         setState(() {
           standings = data['response'][0]['league']['standings'][0];
           isLoading = false;
@@ -50,11 +97,7 @@ class _StandingsPageState extends State<StandingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Premier League Standings"),
-        automaticallyImplyLeading: false,
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: Text('${widget.leagueName} Standings')),
       body: isLoading
           ? Center(child: CircularProgressIndicator())
           : hasError
@@ -112,11 +155,9 @@ class _StandingsPageState extends State<StandingsPage> {
       child: AutoSizeText(
         text,
         style: TextStyle(
-          fontWeight: FontWeight.bold,
+          fontWeight: bold ? FontWeight.bold : FontWeight.normal,
           fontSize: 12.0,
         ),
-        // maxLines: 1,
-        // minFontSize: 10, // Ensures it's still readable when scaled down
         overflow: TextOverflow.ellipsis,
       ),
     );

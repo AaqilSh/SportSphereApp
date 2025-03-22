@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sportsphere/providers/team_provider.dart';
+import 'package:sportsphere/models/team.dart';
 
 class TeamDetailsScreen extends StatelessWidget {
   final Team team;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:sportsphere/models/venue.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../providers/venue_provider.dart';
 
 class VenueDetailsScreen extends StatelessWidget {
   final Venue venue;

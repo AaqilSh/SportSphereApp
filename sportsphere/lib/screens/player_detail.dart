@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sportsphere/models/player.dart';
 import 'package:sportsphere/providers/player_provider.dart';
 
 class PlayerDetailsScreen extends StatelessWidget {

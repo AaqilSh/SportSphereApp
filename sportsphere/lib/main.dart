@@ -47,14 +47,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      designSize: const Size(375, 812), // Adjust for your design reference
-      builder: (context, child) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'SportSphere',
-          theme: appTheme,
-          home: const LoginScreen(),
+    return Consumer2<ContrastProvider, FontSizeProvider>(
+      builder: (context, contrastProvider, fontSizeProvider, child) {
+        return ScreenUtilInit(
+          designSize: const Size(375, 812), // Adjust for your design reference
+          builder: (context, child) {
+            return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              title: 'SportSphere',
+              theme: getTheme(contrastProvider.isHighContrast,
+                  fontSizeProvider.isSizeIncreased),
+              home: const LoginScreen(),
+            );
+          },
         );
       },
     );

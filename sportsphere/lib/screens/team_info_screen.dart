@@ -5,7 +5,8 @@ import 'package:http/http.dart' as http;
 class TeamInfoScreen extends StatefulWidget {
   final int leagueId;
   final int teamId;
-  const TeamInfoScreen({required this.leagueId, required this.teamId, super.key});
+  const TeamInfoScreen(
+      {required this.leagueId, required this.teamId, super.key});
 
   @override
   _TeamInfoScreenState createState() => _TeamInfoScreenState();
@@ -51,12 +52,12 @@ class _TeamInfoScreenState extends State<TeamInfoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFF8F9FC),
+      // backgroundColor: Color(0xFFF8F9FC),
       appBar: AppBar(
         title: Text(isLoading
             ? "Loading..."
             : teamData?['response']?['team']?['name'] ?? "Team Info"),
-        backgroundColor: Colors.deepPurpleAccent,
+        // backgroundColor: Colors.deepPurpleAccent,
       ),
       body: isLoading
           ? Center(child: CircularProgressIndicator())

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ContrastProvider with ChangeNotifier {
-  bool _isHighContrast = false; // Default: Normal mode
+  bool _isHighContrast = false;
 
   bool get isHighContrast => _isHighContrast;
 
@@ -10,7 +10,6 @@ class ContrastProvider with ChangeNotifier {
     _isHighContrast = !_isHighContrast;
     notifyListeners();
 
-    // Save preference
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('highContrast', _isHighContrast);
   }

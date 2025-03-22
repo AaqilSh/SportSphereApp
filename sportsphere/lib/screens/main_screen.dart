@@ -3,7 +3,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sportsphere/screens/p_new.dart';
 import 'package:sportsphere/screens/profile_screen.dart';
 import 'package:sportsphere/screens/standing_home.dart';
-import 'package:sportsphere/screens/standings.dart';
 import 'search_screen.dart';
 import 'teams_screen.dart';
 import 'schedule_screen.dart';
@@ -25,7 +24,6 @@ class _MainScreenState extends State<MainScreen> {
     ScheduleScreen(),
     PlayersScreen(),
     StandingsScreen(),
-    // StandingsPage(),
     ProfileScreen(),
   ];
 
@@ -54,9 +52,9 @@ class _MainScreenState extends State<MainScreen> {
           BottomNavigationBarItem(
               icon: FaIcon(FontAwesomeIcons.calendarDays), label: "Schedule"),
           BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.peopleGroup), label: "Players"),
+              icon: FaIcon(FontAwesomeIcons.peopleGroup), label: "Squad"),
           BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.peopleGroup), label: "Standings"),
+              icon: FaIcon(FontAwesomeIcons.table), label: "Standings"),
           BottomNavigationBarItem(
               icon: FaIcon(FontAwesomeIcons.user), label: "Profile"),
         ],

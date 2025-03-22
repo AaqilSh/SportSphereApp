@@ -157,7 +157,7 @@ class _LeaguesScreenState extends State<LeaguesScreen> {
                 teamData['name'],
                 textAlign: TextAlign.center,
                 style:
-                    const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                    const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),

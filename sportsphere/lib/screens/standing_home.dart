@@ -4,10 +4,10 @@ import 'package:sportsphere/screens/standings.dart';
 class StandingsScreen extends StatelessWidget {
   final List<Map<String, String>> leagues = [
     {"idLeague": "39", "strLeague": "Premier League"},
-    {"idLeague": "4331", "strLeague": "La Liga"},
-    {"idLeague": "4335", "strLeague": "Bundesliga"},
-    {"idLeague": "4334", "strLeague": "Serie A"},
-    {"idLeague": "4332", "strLeague": "Ligue 1"},
+    {"idLeague": "140", "strLeague": "La Liga"},
+    {"idLeague": "78", "strLeague": "Bundesliga"},
+    {"idLeague": "135", "strLeague": "Serie A"},
+    {"idLeague": "61", "strLeague": "Ligue 1"},
   ];
 
   @override

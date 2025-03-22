@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sportsphere/screens/terms_condition.dart';
 
 class AppInfoScreen extends StatelessWidget {
   const AppInfoScreen({super.key});
@@ -34,6 +35,10 @@ class AppInfoScreen extends StatelessWidget {
               leading: Icon(Icons.description, color: Colors.purple),
               title: Text('Terms of Service'),
               onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => TermsAndConditionsScreen()));
                 // Navigate to Terms of Service
               },
             ),

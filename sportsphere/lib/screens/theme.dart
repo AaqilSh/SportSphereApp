@@ -130,7 +130,7 @@ ThemeData getTheme(bool isHighContrast, bool isSizeIncreased) {
         backgroundColor: Color(0xff8C8CBF),
         elevation: 2,
         titleTextStyle: TextStyle(
-          fontSize: (baseFontSize + 4).sp, // Reduced from +6
+          fontSize: (baseFontSize + 8).sp, // Reduced from +6
           fontFamily: 'Poppins',
           fontWeight: FontWeight.w600,
           color: Colors.black,

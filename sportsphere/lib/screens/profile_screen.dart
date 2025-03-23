@@ -45,11 +45,11 @@ class ProfileScreen extends StatelessWidget {
             Text("Others Options",
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
             Divider(),
+            _buildSettingsOption("Accessibility", context),
             _buildSettingsOption("Notifications", context),
             _buildSettingsOption("Privacy", context),
             _buildSettingsOption("Customer Support", context),
             _buildSettingsOption("App info", context),
-            _buildSettingsOption("Accessibility", context),
             Spacer(),
             Center(
               child: TextButton(

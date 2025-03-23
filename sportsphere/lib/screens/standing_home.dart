@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sportsphere/screens/standings.dart';
+import 'package:sportsphere/screens/top_assist_screen.dart';
+import 'package:sportsphere/screens/top_scorer_screen.dart';
 
-class StandingsScreen extends StatelessWidget {
+class StandingsAndStatsScreen extends StatelessWidget {
   final List<Map<String, String>> leagues = [
     {
       "idLeague": "39",
@@ -35,40 +37,112 @@ class StandingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Standings')),
-      body: ListView.builder(
-        itemCount: leagues.length,
-        itemBuilder: (context, index) {
-          return Card(
-            color: Color(0xffDAF0F2),
-            child: ListTile(
-              leading: Image.network(
-                leagues[index]['imageUrl']!,
-                width: 50,
-                height: 50,
-                errorBuilder: (context, error, stackTrace) {
-                  return Icon(Icons.image_not_supported, size: 50);
-                },
-              ),
-              title: Text(
-                leagues[index]['strLeague']!,
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              trailing: Icon(Icons.arrow_forward_ios),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => LeagueStandingsScreen(
-                      leagueId: leagues[index]['idLeague']!,
-                      leagueName: leagues[index]['strLeague']!,
-                    ),
-                  ),
-                );
+    return DefaultTabController(
+      length: 2, // Two tabs: Standings & Statistics
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Standings & Statistics'),
+          bottom: TabBar(
+            indicatorColor: Colors.white,
+            tabs: [
+              Tab(text: 'Standings', icon: Icon(Icons.format_list_numbered)),
+              Tab(text: 'Statistics', icon: Icon(Icons.bar_chart)),
+            ],
+          ),
+        ),
+        body: TabBarView(
+          children: [
+            _buildStandingsTab(context),
+            _buildStatisticsTab(context),
+          ],
+        ),
+      ),
+    );
+  }
+
+  /// Standings Tab
+  Widget _buildStandingsTab(BuildContext context) {
+    return ListView.builder(
+      itemCount: leagues.length,
+      itemBuilder: (context, index) {
+        return Card(
+          color: Color(0xffDAF0F2),
+          child: ListTile(
+            leading: Image.network(
+              leagues[index]['imageUrl']!,
+              width: 50,
+              height: 50,
+              errorBuilder: (context, error, stackTrace) {
+                return Icon(Icons.image_not_supported, size: 50);
               },
             ),
-          );
+            title: Text(
+              leagues[index]['strLeague']!,
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            trailing: Icon(Icons.arrow_forward_ios),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => LeagueStandingsScreen(
+                    leagueId: leagues[index]['idLeague']!,
+                    leagueName: leagues[index]['strLeague']!,
+                  ),
+                ),
+              );
+            },
+          ),
+        );
+      },
+    );
+  }
+
+  /// Statistics Tab
+  Widget _buildStatisticsTab(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(16),
+      child: ListView(
+        children: [
+          _buildStatCard(
+            context,
+            title: "Top Scorers",
+            subtitle: "See the highest goal scorers",
+            icon: Icons.sports_soccer,
+            screen: TopScorersScreen(),
+          ),
+          SizedBox(height: 16),
+          _buildStatCard(
+            context,
+            title: "Top Assists",
+            subtitle: "See players with the most assists",
+            icon: Icons.assist_walker,
+            screen: TopAssistsScreen(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Reusable Card Widget for Statistics
+  Widget _buildStatCard(BuildContext context,
+      {required String title,
+      required String subtitle,
+      required IconData icon,
+      required Widget screen}) {
+    return Card(
+      elevation: 3,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: ListTile(
+        leading: Icon(icon, size: 40, color: Colors.blueAccent),
+        title: Text(title,
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+        subtitle:
+            Text(subtitle, style: TextStyle(fontSize: 14, color: Colors.grey)),
+        trailing: Icon(Icons.arrow_forward_ios, color: Colors.grey),
+        onTap: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => screen));
         },
       ),
     );

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:sportsphere/screens/p_new.dart';
+import 'package:sportsphere/screens/player_screen.dart';
+// import 'package:sportsphere/screens/p_new.dart';
 import 'package:sportsphere/screens/profile_screen.dart';
 import 'package:sportsphere/screens/standing_home.dart';
 import 'search_screen.dart';
 import 'teams_screen.dart';
 import 'schedule_screen.dart';
-// import 'player_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -23,7 +23,8 @@ class _MainScreenState extends State<MainScreen> {
     SearchScreen(),
     ScheduleScreen(),
     PlayersScreen(),
-    StandingsScreen(),
+    // StandingsScreen(),
+    StandingsAndStatsScreen(),
     ProfileScreen(),
   ];
 

@@ -35,8 +35,7 @@ class _FavoritePlayersScreenState extends State<FavoritePlayersScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          title: Text("Favorite Players"), backgroundColor: Colors.black),
+      appBar: AppBar(title: Text("Favorite Players")),
       body: favoritePlayers.isEmpty
           ? Center(child: Text("No favorite players added"))
           : ListView.builder(

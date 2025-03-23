@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class CustomerSupportScreen extends StatelessWidget {
   const CustomerSupportScreen({super.key});
+  final String supportEmail = "admin@sportsphere.com";
 
   @override
   Widget build(BuildContext context) {
@@ -20,18 +23,14 @@ class CustomerSupportScreen extends StatelessWidget {
             ListTile(
               leading: Icon(Icons.email, color: Colors.blue),
               title: Text('Contact via Email'),
-              onTap: () {
-                // Implement email support logic
-              },
+              onTap: () => launchUrlString(
+                  "mailto:admin@sportsphere.com?subject=SportSphere&body=Contact%20support"),
             ),
             Divider(),
             ListTile(
-              leading: Icon(Icons.phone, color: Colors.green),
-              title: Text('Call Support'),
-              onTap: () {
-                // Implement call support logic
-              },
-            ),
+                leading: Icon(Icons.phone, color: Colors.green),
+                title: Text('Call Support'),
+                onTap: () => launchUrlString("tel://123456789")),
             Divider(),
             ListTile(
               leading: Icon(Icons.help_outline, color: Colors.orange),

@@ -9,29 +9,31 @@ class StandingsAndStatsScreen extends StatelessWidget {
       "idLeague": "39",
       "strLeague": "Premier League",
       "imageUrl":
-          "https://upload.wikimedia.org/wikipedia/en/f/f2/Premier_League_Logo.svg"
+          "https://upload.wikimedia.org/wikipedia/en/thumb/f/f2/Premier_League_Logo.svg/1200px-Premier_League_Logo.svg.png"
     },
     {
       "idLeague": "140",
       "strLeague": "La Liga",
-      "imageUrl": "https://upload.wikimedia.org/wikipedia/en/1/13/LaLiga.svg"
+      "imageUrl":
+          "https://brandlogos.net/wp-content/uploads/2021/01/la-liga-logo.png"
     },
     {
       "idLeague": "78",
       "strLeague": "Bundesliga",
       "imageUrl":
-          "https://upload.wikimedia.org/wikipedia/en/d/df/Bundesliga_logo_%282017%29.svg"
+          "https://upload.wikimedia.org/wikipedia/en/thumb/d/df/Bundesliga_logo_%282017%29.svg/800px-Bundesliga_logo_%282017%29.svg.png"
     },
     {
       "idLeague": "135",
       "strLeague": "Serie A",
       "imageUrl":
-          "https://upload.wikimedia.org/wikipedia/en/e/e1/Serie_A_logo_%282019%29.svg"
+          "https://brandlogos.net/wp-content/uploads/2021/12/serie_a-brandlogo.net_-512x512.png"
     },
     {
       "idLeague": "61",
       "strLeague": "Ligue 1",
-      "imageUrl": "https://upload.wikimedia.org/wikipedia/en/2/29/Ligue1.svg"
+      "imageUrl":
+          "https://upload.wikimedia.org/wikipedia/commons/5/5e/Ligue1.svg"
     },
   ];
 
@@ -41,6 +43,7 @@ class StandingsAndStatsScreen extends StatelessWidget {
       length: 2, // Two tabs: Standings & Statistics
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           title: Text('Standings & Statistics'),
           bottom: TabBar(
             indicatorColor: Colors.white,
@@ -78,7 +81,7 @@ class StandingsAndStatsScreen extends StatelessWidget {
             ),
             title: Text(
               leagues[index]['strLeague']!,
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0),
             ),
             trailing: Icon(Icons.arrow_forward_ios),
             onTap: () {
@@ -107,7 +110,7 @@ class StandingsAndStatsScreen extends StatelessWidget {
           _buildStatCard(
             context,
             title: "Top Scorers",
-            subtitle: "See the highest goal scorers",
+            subtitle: "See the top goal scorers",
             icon: Icons.sports_soccer,
             screen: TopScorersScreen(),
           ),
@@ -116,7 +119,7 @@ class StandingsAndStatsScreen extends StatelessWidget {
             context,
             title: "Top Assists",
             subtitle: "See players with the most assists",
-            icon: Icons.assist_walker,
+            icon: Icons.handshake,
             screen: TopAssistsScreen(),
           ),
         ],
@@ -134,11 +137,11 @@ class StandingsAndStatsScreen extends StatelessWidget {
       elevation: 3,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: ListTile(
-        leading: Icon(icon, size: 40, color: Colors.blueAccent),
+        leading: Icon(icon, size: 36, color: Colors.blueAccent),
         title: Text(title,
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
         subtitle:
-            Text(subtitle, style: TextStyle(fontSize: 14, color: Colors.grey)),
+            Text(subtitle, style: TextStyle(fontSize: 12, color: Colors.grey)),
         trailing: Icon(Icons.arrow_forward_ios, color: Colors.grey),
         onTap: () {
           Navigator.push(

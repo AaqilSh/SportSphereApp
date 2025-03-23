@@ -133,7 +133,7 @@ ThemeData getTheme(bool isHighContrast, bool isSizeIncreased) {
           fontSize: (baseFontSize + 8).sp, // Reduced from +6
           fontFamily: 'Poppins',
           fontWeight: FontWeight.w600,
-          color: Colors.black,
+          color: Color(0xff0A121A),
           letterSpacing: 1.1,
         ),
         iconTheme: IconThemeData(color: Colors.black),

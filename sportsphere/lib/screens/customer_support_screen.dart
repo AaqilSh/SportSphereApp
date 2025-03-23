@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sportsphere/screens/faq_scree.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -36,7 +37,10 @@ class CustomerSupportScreen extends StatelessWidget {
               leading: Icon(Icons.help_outline, color: Colors.orange),
               title: Text('Visit FAQ'),
               onTap: () {
-                // Navigate to FAQ section
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => FAQScreen()),
+                );
               },
             ),
           ],

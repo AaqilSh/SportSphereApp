@@ -1,18 +1,66 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class PlayerStatsScreen extends StatelessWidget {
+class PlayerStatsScreen extends StatefulWidget {
   final Map<String, dynamic> playerData;
 
   const PlayerStatsScreen({Key? key, required this.playerData})
       : super(key: key);
 
   @override
+  _PlayerStatsScreenState createState() => _PlayerStatsScreenState();
+}
+
+class _PlayerStatsScreenState extends State<PlayerStatsScreen> {
+  Set<String> favoritePlayers = {};
+
+  @override
+  void initState() {
+    super.initState();
+    loadFavorites();
+  }
+
+  Future<void> loadFavorites() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      favoritePlayers = prefs.getStringList('favoritePlayers')?.toSet() ?? {};
+    });
+  }
+
+  Future<void> toggleFavorite(String playerName) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    setState(() {
+      if (favoritePlayers.contains(playerName)) {
+        favoritePlayers.remove(playerName);
+      } else {
+        favoritePlayers.add(playerName);
+      }
+      prefs.setStringList('favoritePlayers', favoritePlayers.toList());
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    var player = playerData["player"];
-    var stats = playerData["statistics"][0]["games"];
+    var player = widget.playerData["player"];
+    var stats = widget.playerData["statistics"][0]["games"];
+    String playerName = player["name"];
 
     return Scaffold(
-      appBar: AppBar(title: Text(player["name"])),
+      appBar: AppBar(
+        title: Text(playerName),
+        actions: [
+          IconButton(
+            icon: Icon(
+              favoritePlayers.contains(playerName)
+                  ? Icons.favorite
+                  : Icons.favorite_border,
+              color: favoritePlayers.contains(playerName) ? Colors.red : null,
+            ),
+            onPressed: () => toggleFavorite(playerName),
+          ),
+        ],
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -23,7 +71,7 @@ class PlayerStatsScreen extends StatelessWidget {
               backgroundImage: NetworkImage(player["photo"]),
             ),
             SizedBox(height: 10),
-            Text(player["name"],
+            Text(playerName,
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
             Text(player["nationality"],
                 style: TextStyle(fontSize: 18, color: Colors.grey)),
@@ -33,13 +81,13 @@ class PlayerStatsScreen extends StatelessWidget {
             _buildStatRow("Appearances", stats["appearences"]),
             _buildStatRow("Minutes Played", stats["minutes"]),
             _buildStatRow(
-                "Goals", playerData["statistics"][0]["goals"]["total"]),
-            _buildStatRow(
-                "Assists", playerData["statistics"][0]["goals"]["assists"]),
-            _buildStatRow(
-                "Yellow Cards", playerData["statistics"][0]["cards"]["yellow"]),
-            _buildStatRow(
-                "Red Cards", playerData["statistics"][0]["cards"]["red"]),
+                "Goals", widget.playerData["statistics"][0]["goals"]["total"]),
+            _buildStatRow("Assists",
+                widget.playerData["statistics"][0]["goals"]["assists"]),
+            _buildStatRow("Yellow Cards",
+                widget.playerData["statistics"][0]["cards"]["yellow"]),
+            _buildStatRow("Red Cards",
+                widget.playerData["statistics"][0]["cards"]["red"]),
           ],
         ),
       ),

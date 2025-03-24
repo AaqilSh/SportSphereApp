@@ -51,7 +51,7 @@ class _FavoriteTeamsScreenState extends State<FavoriteTeamsScreen> {
                   leading: Image.network(team["logo"], width: 40, height: 40),
                   title: Text(team["name"]),
                   trailing: IconButton(
-                    icon: Icon(Icons.delete, color: Colors.red),
+                    icon: Icon(Icons.remove_circle, color: Colors.red),
                     onPressed: () => _removeFromFavorites(team),
                   ),
                 );

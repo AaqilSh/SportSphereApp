@@ -19,12 +19,12 @@ class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0; // Default screen index
 
   final List<Widget> _screens = [
-    ProfileScreen(),
     LeaguesScreen(),
     SearchScreen(),
     ScheduleScreen(),
     PlayersScreen(),
     StandingsAndStatsScreen(),
+    ProfileScreen(),
   ];
 
   void _onItemTapped(int index) {

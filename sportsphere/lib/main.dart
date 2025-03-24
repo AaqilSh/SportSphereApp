@@ -7,6 +7,7 @@ import 'package:sportsphere/providers/font_size_provider.dart';
 import 'package:sportsphere/providers/player_provider.dart';
 import 'package:sportsphere/providers/team_provider.dart';
 import 'package:sportsphere/providers/venue_provider.dart';
+import 'package:sportsphere/screens/AuthWrapper.dart';
 import 'package:sportsphere/screens/theme.dart';
 import 'screens/login_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -57,7 +58,7 @@ class MyApp extends StatelessWidget {
               title: 'SportSphere',
               theme: getTheme(contrastProvider.isHighContrast,
                   fontSizeProvider.isSizeIncreased),
-              home: const LoginScreen(),
+              home: AuthWrapper(),
             );
           },
         );

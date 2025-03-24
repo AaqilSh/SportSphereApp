@@ -33,7 +33,7 @@ class StandingsAndStatsScreen extends StatelessWidget {
       "idLeague": "61",
       "strLeague": "Ligue 1",
       "imageUrl":
-          "https://upload.wikimedia.org/wikipedia/commons/5/5e/Ligue1.svg"
+          "https://images.seeklogo.com/logo-png/53/2/ligue-1-logo-png_seeklogo-535794.png"
     },
   ];
 

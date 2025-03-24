@@ -50,7 +50,7 @@ class _FavoritePlayersScreenState extends State<FavoritePlayersScreen> {
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     trailing: IconButton(
-                      icon: Icon(Icons.delete, color: Colors.red),
+                      icon: Icon(Icons.person_remove, color: Colors.red),
                       onPressed: () =>
                           _removeFromFavorites(favoritePlayers[index]),
                     ),

@@ -53,20 +53,33 @@ class ProfileScreen extends StatelessWidget {
             Spacer(),
             Center(
               child: TextButton(
-                onPressed: () async {
-                  try {
-                    await FirebaseAuth.instance.signOut();
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => LoginScreen()));
-                  } catch (e) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text("Logout failed: $e")),
-                    );
-                  }
-                },
-                child: Text("Logout",
-                    style: TextStyle(color: Colors.red, fontSize: 16)),
-              ),
+                  onPressed: () async {
+                    try {
+                      await FirebaseAuth.instance.signOut();
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => LoginScreen()));
+                    } catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text("Logout failed: $e")),
+                      );
+                    }
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.red.withOpacity(0.1), // Light red fill
+                      borderRadius: BorderRadius.circular(8), // Rounded corners
+                    ),
+                    padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                    child: Text(
+                      "Logout",
+                      style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500),
+                    ),
+                  )),
             ),
           ],
         ),

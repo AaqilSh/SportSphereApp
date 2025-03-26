@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sportsphere/providers/contrast_provider.dart';
 import 'package:sportsphere/providers/player_provider.dart';
 import 'package:sportsphere/providers/team_provider.dart';
 import 'package:sportsphere/providers/venue_provider.dart';
@@ -13,14 +12,11 @@ class SearchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isHighContrast = Provider.of<ContrastProvider>(context).isHighContrast;
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Search'),
         centerTitle: true,
         automaticallyImplyLeading: false,
-        // backgroundColor: isHighContrast ? Colors.black:Color('')
       ),
       body: Column(
         children: [
@@ -114,7 +110,7 @@ class SearchScreen extends StatelessWidget {
                             subtitle:
                                 '${venue.strLocation} - Capacity: ${venue.intCapacity}'
                                     .replaceFirst(RegExp(r'^_'), ''),
-                            imageUrl: venue.strThumb?.isNotEmpty == true
+                            imageUrl: venue.strThumb.isNotEmpty == true
                                 ? venue.strThumb
                                 : null,
                             onTap: () {

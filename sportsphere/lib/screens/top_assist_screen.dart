@@ -12,6 +12,7 @@ class TopAssistsScreen extends StatefulWidget {
 }
 
 class _TopAssistsScreenState extends State<TopAssistsScreen> {
+  // Temas commented beacuase of API call limitation
   final Map<int, String> leagues = {
     39: "Premier League",
     // 735: "La Liga",
@@ -86,8 +87,7 @@ class _TopAssistsScreenState extends State<TopAssistsScreen> {
                     ),
                     if (topAssists.containsKey(leagueId))
                       ...topAssists[leagueId]!
-                          .map((player) => PlayerCard(player: player))
-                          ,
+                          .map((player) => PlayerCard(player: player)),
                     Divider(),
                   ],
                 );

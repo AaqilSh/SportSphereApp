@@ -11,14 +11,13 @@ class TopAssistsScreen extends StatefulWidget {
 }
 
 class _TopAssistsScreenState extends State<TopAssistsScreen> {
-  // Temas commented beacuase of API call limitation
   final Map<int, String> leagues = {
     39: "Premier League",
-    // 735: "La Liga",
-    // 61: "Ligue 1",
-    // 78: "Bundesliga",
-    // 135: "Serie A",
-    // 88: "Eredivisie"
+    735: "La Liga",
+    61: "Ligue 1",
+    78: "Bundesliga",
+    135: "Serie A",
+    88: "Eredivisie"
   };
 
   Map<int, List<dynamic>> topAssists = {};

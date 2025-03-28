@@ -36,11 +36,9 @@ class TeamDetailsScreen extends StatelessWidget {
                 ),
                 Semantics(
                   label: "Visit the official website of ${team.strTeam}",
-                  button: true, // Indicates it's a tappable element
+                  button: true,
                   child: InkWell(
-                    onTap: () {
-                      // Add actual website link handling
-                    },
+                    onTap: () {},
                     child: Text(
                       'Website: ${team.strWebsite}',
                       style: TextStyle(color: Colors.blue),

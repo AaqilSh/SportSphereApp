@@ -26,8 +26,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
         "https://v3.football.api-sports.io/fixtures?league=39&season=2022";
     final Map<String, String> headers = {
       'x-rapidapi-host': "v3.football.api-sports.io",
-      'x-rapidapi-key':
-          "a0ae70bf7c6687247992d15ddff92bfb" // Replace with your API key
+      'x-rapidapi-key': "a0ae70bf7c6687247992d15ddff92bfb"
     };
 
     try {
@@ -166,9 +165,8 @@ class FixtureCard extends StatelessWidget {
     try {
       DateTime parsedDate = DateTime.parse(dateTime).toLocal();
       return DateFormat('dd MMM yyyy, hh:mm a').format(parsedDate);
-      // Example output: 06 Aug 2022, 11:30 AM
     } catch (e) {
-      return "Invalid Date"; // Fallback for unexpected format
+      return "Invalid Date";
     }
   }
 }

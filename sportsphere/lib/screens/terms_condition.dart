@@ -42,12 +42,6 @@ class TermsAndConditionsScreen extends StatelessWidget {
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
               ),
               SizedBox(height: 20),
-              // Center(
-              //   child: ElevatedButton(
-              //     onPressed: () => Navigator.pop(context),
-              //     child: Text("Accept & Continue"),
-              //   ),
-              // ),
             ],
           ),
         ),

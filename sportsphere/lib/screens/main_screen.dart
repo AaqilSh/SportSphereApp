@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 // import 'package:sportsphere/screens/player_screen.dart';
-import 'package:sportsphere/screens/p_new.dart';
+import 'package:sportsphere/screens/players_screen.dart';
 import 'package:sportsphere/screens/profile_screen.dart';
 import 'package:sportsphere/screens/standing_home.dart';
 import 'search_screen.dart';

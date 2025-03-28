@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sportsphere/screens/faq_scree.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class CustomerSupportScreen extends StatelessWidget {

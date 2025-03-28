@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sportsphere/screens/p_stat.dart';
+import 'package:sportsphere/screens/players_stat_screen.dart.dart';
 
 class PlayersScreen extends StatefulWidget {
   @override

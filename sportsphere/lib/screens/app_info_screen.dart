@@ -39,7 +39,6 @@ class AppInfoScreen extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                         builder: (context) => TermsAndConditionsScreen()));
-                // Navigate to Terms of Service
               },
             ),
           ],

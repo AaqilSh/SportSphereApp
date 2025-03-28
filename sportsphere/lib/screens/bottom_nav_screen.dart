@@ -25,7 +25,6 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
     ProfileScreen(),
   ];
 
-  // Function to change index when tab is clicked
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;

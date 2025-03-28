@@ -43,8 +43,6 @@ class AccessibilityScreen extends StatelessWidget {
               value: fontSize > 16.0,
               onChanged: (bool value) {
                 fontSizeProvider.setFontSize(value ? 20.0 : 16.0);
-
-                // Handle toggle
               },
             ),
           ],

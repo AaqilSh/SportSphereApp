@@ -81,7 +81,7 @@ class _LoginScreenState extends State<LoginScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(height: 40), // Adjust for better spacing
+              const SizedBox(height: 40),
               Image.asset(
                 'assets/images/logo.png',
                 scale: .2,
@@ -184,7 +184,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ],
               ),
-              const SizedBox(height: 40), // Add extra space at the bottom
+              const SizedBox(height: 40),
             ],
           ),
         ),

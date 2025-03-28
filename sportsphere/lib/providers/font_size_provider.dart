@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class FontSizeProvider with ChangeNotifier {
-  double _fontSize = 16.0; // Default font size
-  static const double defaultFontSize = 16.0; // Define a constant for default
+  double _fontSize = 16.0;
+  static const double defaultFontSize = 16.0;
 
   double get fontSize => _fontSize;
 
-  bool get isSizeIncreased =>
-      _fontSize > defaultFontSize; // Determine if increased
+  bool get isSizeIncreased => _fontSize > defaultFontSize;
 
   void setFontSize(double newSize) async {
     _fontSize = newSize;
